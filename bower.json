@@ -1,0 +1,26 @@
+{
+  "name": "decode",
+  "description": "A physician coding platform",
+  "main": "index.js",
+  "authors": [
+    "Mahtab Alam"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "CGHR"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-ui-router": "^0.4.2"
+  }
+}
