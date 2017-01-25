@@ -1,2 +1,4 @@
 node_modules/*
 src/vendor/*
+npm-debug.log
+public/*

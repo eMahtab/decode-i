@@ -1,0 +1,34 @@
+<div class="login-panel container">
+			<div class="col-md-4 col-md-offset-4 panel panel-default">
+
+				<h1 align="center" class="gap margin-base-vertical">Login</h1>
+        <h4 align="center" class="ubuntu-text" ng-show="loginError">{{loginError}}</h4>
+
+				<form ng-submit="login(user.email,user.password)"  class="gap margin-base-vertical">
+          <p class="input-group ">
+						<span class="input-group-addon"><span class="icon-envelope"></span></span>
+						<input autofocus ng-model="user.email" type="email" required class="form-control input-lg"
+						       name="email" placeholder="email address" />
+					</p>
+
+          <p class="input-group ">
+						<span class="input-group-addon"><span class="icon-key"></span></span>
+						<input ng-model="user.password" type="password" required class="form-control input-lg"
+						       name="password" placeholder="password" />
+					</p>
+
+          <br/>
+
+					<p class="text-center">
+						<button type="submit" class="btn btn-success btn-lg">Get In</button>
+					</p>
+				</form>
+
+				<div class="gap margin-base-vertical">
+					<h5 align="center">Don't have an account? <a ui-sref="signup">Create one</a></h5>
+				</div>
+
+			 <br/>
+
+			</div>
+</div>

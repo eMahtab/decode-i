@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node app.js"
+    "start": "node app.js"
   },
   "keywords": [
     "CGHR"
@@ -13,7 +13,12 @@
   "author": "Mahtab Alam",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.16.0",
     "ejs": "^2.5.5",
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "express-jwt": "^5.1.0",
+    "jsonwebtoken": "^7.2.1",
+    "md5": "^2.2.1",
+    "mysql": "^2.13.0"
   }
 }
