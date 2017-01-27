@@ -8,6 +8,7 @@ var expressJwt = require('express-jwt');
 var jwtSecret = 'kjwdjs65$ikksop0982shj';
 
 var user=require('./routes/user.js');
+var va_record=require('./routes/record.js');
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/cme-core/src'));
@@ -41,6 +42,9 @@ app.post('/provisioningLogin',user.provisioningLogin,function(req,res){
     var token = jwt.sign({username: req.body.username}, jwtSecret);
     res.status(200).send({token: token,username: req.body.username});
 });
+
+app.post('/vaRecord',va_record.create);
+
 
 var port = process.env.PORT || 7000;
 

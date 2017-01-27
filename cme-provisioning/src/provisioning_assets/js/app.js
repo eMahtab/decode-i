@@ -17,6 +17,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/manage',
             templateUrl: 'provisioning_assets/templates/dashboard.html',
             controller:'DashboardController'
+        })
+        .state('study', {
+            url: '/study',
+            templateUrl: 'provisioning_assets/templates/create_study.html',
+            controller:'StudyController'
         });
 
 });

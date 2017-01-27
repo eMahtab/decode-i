@@ -13,12 +13,14 @@
   "author": "Mahtab Alam",
   "license": "MIT",
   "dependencies": {
+    "async": "^2.1.4",
     "body-parser": "^1.16.0",
     "ejs": "^2.5.5",
     "express": "^4.14.0",
     "express-jwt": "^5.1.0",
     "jsonwebtoken": "^7.2.1",
     "md5": "^2.2.1",
-    "mysql": "^2.13.0"
+    "mysql": "^2.13.0",
+    "request": "^2.79.0"
   }
 }
