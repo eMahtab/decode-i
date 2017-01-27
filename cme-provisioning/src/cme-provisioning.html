@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="provisioning_assets/css/app.css">
     <link rel="stylesheet" href="provisioning_assets/css/sidebar.css">
-    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/AngularJS-Toaster/toaster.min.css" charset="utf-8">
+    <!-- <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"> -->
   </head>
   <body ng-app="cmeProvisioning">
+    <toaster-container></toaster-container>
 
     <div ng-include="'provisioning_assets/templates/sidebar.html'"></div>
 
@@ -16,6 +18,8 @@
 
     <script src="vendor/angular/angular.min.js" ></script>
     <script src="vendor/angular-ui-router/release/angular-ui-router.min.js" ></script>
+    <script src="vendor/angular-animate/angular-animate.min.js" ></script>
+    <script src="vendor/AngularJS-Toaster/toaster.min.js" ></script>
 
     <script src="provisioning_assets/js/constant.js" ></script>
     <script src="provisioning_assets/js/factory/factory.js" ></script>

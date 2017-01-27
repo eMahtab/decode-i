@@ -9,6 +9,7 @@ var jwtSecret = 'kjwdjs65$ikksop0982shj';
 
 var user=require('./routes/user.js');
 var va_record=require('./routes/record.js');
+var study=require('./routes/study.js');
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/cme-core/src'));
@@ -44,6 +45,7 @@ app.post('/provisioningLogin',user.provisioningLogin,function(req,res){
 });
 
 app.post('/vaRecord',va_record.create);
+app.post('/study',study.create);
 
 
 var port = process.env.PORT || 7000;

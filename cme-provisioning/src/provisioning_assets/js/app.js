@@ -1,4 +1,5 @@
-var app=angular.module('cmeProvisioning',['ui.router','app.constants','app.factory','app.service','app.controllers']);
+var app=angular.module('cmeProvisioning',['ui.router','app.constants','app.factory',
+    'app.service','app.controllers','toaster']);
 
 app.config(function($httpProvider){
   $httpProvider.interceptors.push('AuthInterceptor');

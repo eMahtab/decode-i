@@ -1,3 +1,31 @@
-<div class="page-content">
-     <p align="center">New Study</p>     
-</div>
+<div class="container">
+<div class="col-md-offset-2 page-content">
+     
+    
+     <form name="studyForm" ng-controller="StudyController" ng-submit="processForm()" class="form-horizontal" novalidate>
+
+        <div class="col-md-9 form-group">
+         <label style="text-align: left;" class ="control-label col-md-2 ">Study name</label>
+         <div class="col-md-3">
+             <input ng-model="formData.name" type="text" class="form-control" placeholder="Study Name">
+         </div>
+        </div> 
+
+         <br/>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-4">
+              <button type="submit" class="btn btn-success">
+                <span>Save</span> 
+              </button>
+              <!--  <pre>studyForm= {{ formData | json }}</pre>  -->
+            </div>
+         </div>
+
+
+     </form>
+
+
+
+</div>  
+</div>   
