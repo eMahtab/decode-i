@@ -1,0 +1,80 @@
+<div ng-controller="ManagePhysicianController" ng-init="retrievePhysician()">
+<div class="modal-header">
+    <h3>Create A New Account!</h3>
+</div>
+
+<form novalidate>
+
+    <div class="modal-body"> 
+       <uib-tabset active="active">
+         <uib-tab index="0" heading="Physicians">
+
+             <table class="table table-hover table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <th><input type="text" ng-model="search.name" class="form-control"/>
+                        <th><input type="text" ng-model="search.email" class="form-control"/>
+                        <th><input type="text" ng-model="search.role" class="form-control"/>
+                        <th><input type="text" readonly="readonly" class="form-control"/>
+                    </tr>    
+                </thead>
+                <tbody>
+                    <tr ng-repeat="physician in retrievedPhysicians | filter:search"
+                        ng-style="{ 
+                        'background-color' : physicians.selectedPhysicians.indexOf(physician.email) != -1 ?'lightgreen' : ''
+                                 }">
+                      <td>{{physician.name}}</td>
+                      <td>{{physician.email}}</td>
+                      <td>{{physician.role}}</td>
+                      <td>
+                        <span style="margin-left:15px" ng-click="selectPhysician(physician.email)" class="glyphicon glyphicon-ok"></span>
+                             
+                        <span ng-show="physicians.selectedPhysicians.indexOf(physician.email) != -1" style="margin-left:35px" ng-click="deletePhysician(physician.email)" class="glyphicon glyphicon-remove"></span>
+                      </td>
+                    </tr>    
+                </tbody>
+             </table> 
+
+         </uib-tab>   
+
+         <uib-tab index="1" heading="Selected Physicians">
+             <table class="table table-hover table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>                        
+                    </tr>
+                    <tr>
+                        <th><input type="text" ng-model="selectedPhysicianSearch.name" class="form-control"/>
+                        <th><input type="text" ng-model="selectedPhysicianSearch.email" class="form-control"/>
+                        <th><input type="text" ng-model="selectedPhysicianSearch.role" class="form-control"/>
+                    </tr>    
+                </thead>
+                <tbody>
+                    <tr ng-repeat="physician in physicians.selectedPhysicians">                        
+                      <td>{{physician}}</td>
+                      <!--<td>{{physician.email}}</td>
+                      <td>{{physician.role}}</td>   -->                   
+                    </tr>    
+                </tbody>
+             </table> 
+         </uib-tab> 
+
+       </uib-tabset>  
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-success" >Save</button>
+        <button class="btn btn-warning" >Cancel</button>         
+    </div>
+
+</form>
+
+</div>

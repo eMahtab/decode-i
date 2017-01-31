@@ -2,8 +2,8 @@ var db=require('../db/db.js');
 
 exports.create=function(req,res){
 
-   console.log("Study "+JSON.stringify(req.body));
-   var sql = "INSERT INTO study SET ?";
+   console.log("Physician "+JSON.stringify(req.body));
+   var sql = "INSERT INTO physicians SET ?";
    
    
    db.query(sql,req.body, function(err,result) {
@@ -15,10 +15,11 @@ exports.create=function(req,res){
 }
 
 
+
 exports.get=function(req,res){
 
    console.log("Study "+JSON.stringify(req.body));
-   var sql = "SELECT name FROM study";
+   var sql = "SELECT * FROM physicians";
    
    
    db.query(sql,function(err,result) {
@@ -27,6 +28,3 @@ exports.get=function(req,res){
     });
 
 }
-
-
-

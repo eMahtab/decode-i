@@ -1,4 +1,4 @@
-var app=angular.module('cmeProvisioning',['ui.router','app.constants','app.factory',
+var app=angular.module('cmeProvisioning',['ui.router','ui.bootstrap','app.constants','app.factory',
     'app.service','app.controllers','toaster']);
 
 app.config(function($httpProvider){
@@ -23,6 +23,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/study',
             templateUrl: 'provisioning_assets/templates/create_study.html',
             controller:'StudyController'
+        })
+        .state('physician', {
+            url: '/physician',
+            templateUrl: 'provisioning_assets/templates/create_physician.html',
+            controller:'PhysicianController'
+        })
+        .state('phase', {
+            url: '/phase',
+            templateUrl: 'provisioning_assets/templates/create_phase.html',
+            controller:'PhaseController'
         });
 
 });

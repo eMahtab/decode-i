@@ -1,0 +1,44 @@
+<div class="container">
+<div class="col-md-offset-2 page-content">
+     
+    
+     <form name="physicianForm" ng-controller="PhaseController"  class="form-horizontal" novalidate>
+
+        <div class="col-md-9 form-group">
+         <label style="text-align: left;" class ="control-label col-md-2 ">Select study</label>
+         <div class="col-md-4">
+             <select ng-model="formData.study" id="mySelect"
+              ng-options="option.name for option in studies">
+              <option value="" selected="selected"> ------ Select a study ------</option>
+             </select>
+         </div>
+        </div> 
+
+        <br/>   
+
+        <div class="col-md-9 form-group">
+         <label style="text-align: left;" class ="control-label col-md-2 ">Add physicians</label>
+         <button ng-click="openPhysicianModal()">Add Physicians</button>
+        </div> 
+
+        <br/>       
+ 
+
+         <br/>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-4">
+              <button type="submit" class="btn btn-success">
+                <span>Save</span> 
+              </button>
+                <pre>physicianForm= {{ formData | json }}</pre>  
+            </div>
+         </div>
+
+
+     </form>
+
+
+
+</div>  
+</div>   
