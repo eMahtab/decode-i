@@ -12,7 +12,7 @@
   ],
   "author": "Mahtab Alam",
   "license": "MIT",
-  "dependencies": {   
+  "dependencies": {
     "async": "^2.1.4",
     "body-parser": "^1.16.0",
     "ejs": "^2.5.5",

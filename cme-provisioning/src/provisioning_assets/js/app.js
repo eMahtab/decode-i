@@ -33,6 +33,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/phase',
             templateUrl: 'provisioning_assets/templates/create_phase.html',
             controller:'PhaseController'
+        })
+        .state('phases', {
+            url: '/phases',
+            templateUrl: 'provisioning_assets/templates/all_phases.html',
+            controller:'AllPhaseController'
         });
 
 });

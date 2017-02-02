@@ -70,11 +70,11 @@ body{
     background: none;
 }
 
-.page-content {
+/*.page-content {
     width: 100%;
     position: absolute;
     padding: 15px;
-}
+}*/
 
 .page-content {
     position: absolute;

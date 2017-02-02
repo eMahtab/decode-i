@@ -1,0 +1,30 @@
+<div class="container">
+<div class="col-md-offset-2 col-md-6 page-content">
+
+<table class="table table-hover table-bordered table-striped">
+<thead>
+  <th>Study Name</th>
+  <th>Phase Name</th>
+  <th>Records</th>
+  <th>Status</th>
+</thead>
+
+    <tbody>
+     <tr ng-repeat="phase in phases.list">
+        <td>{{phase.study_name}}</td>
+        <td>{{phase.phase_name}}</td>
+        <td>{{phase.va_records_phase}}</td>
+        <td>
+        	{{phase.status}}
+        	<span class="btn btn-sm btn-primary" style="margin-left:5px" 
+        	       ng-if="phase.status == 'NOT_STARTED'"
+        	       ng-click="startPhase(phase)">
+        		Start</span>
+        </td>	
+     </tr>
+	</tbody>
+
+</table>	
+
+</div>
+</div>

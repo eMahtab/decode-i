@@ -17,36 +17,38 @@ appControllers.controller('ManagePhysicianController',function($scope,$http,CONS
         });
     }
 
-	$scope.processForm =function(){
-		console.log("Submitting form "+JSON.stringify($scope.formData));
-        $http.post(CONSTANT.API_URL+'/physician',JSON.stringify($scope.formData),
-        	{headers:{"Content-Type":"application/json"}})
-         .then(function(res){
-                 toaster.pop('success',"Physician created");
-               },
-         	   function(err){
-                 console.log("Error "+JSON.stringify(err));
-         	   });
-	}
-
-    $scope.selectPhysician=function(email){
-        console.log("Selecting physician "+email)
-         if($scope.physicians.selectedPhysicians.indexOf(email) == -1){
+    $scope.selectPhysician=function(physician){
+        console.log("Selecting physician "+JSON.stringify(physician));
+        var emails=$scope.physicians.selectedPhysicians.map(function(elem) {return elem.email;});
+         if(emails.indexOf(physician.email) == -1){
             console.log("Added physician");
-            $scope.physicians.selectedPhysicians.push(email);
-            $scope.physicians.selectedPhysicians.sort();
+            $scope.physicians.selectedPhysicians.push(physician);            
          }
     }
 
-    $scope.deletePhysician=function(email){
-        console.log("Deleting physician "+email)
-        var physicianIndex=$scope.physicians.selectedPhysicians.indexOf(email);
-         /*if($scope.physicians.selectedPhysicians.indexOf(email) != -1){
-            console.log("Delete physician");
-            $scope.physicians.selectedPhysicians.push(email);
-         }*/
-         $scope.physicians.selectedPhysicians.splice(physicianIndex,1);
-         $scope.physicians.selectedPhysicians.sort();
+    $scope.deletePhysician=function(physician){
+        console.log("Deleting physician "+JSON.stringify(physician));
+
+        var physicianIndex=$scope.physicians.selectedPhysicians.map(function(elem){return elem.email;})
+                           .indexOf(physician.email);
+          if(physicianIndex != -1){
+            console.log("Deleted physician");
+              $scope.physicians.selectedPhysicians.splice(physicianIndex,1);
+          }
+    }
+
+    $scope.isSelected=function(physician){
+        var physicianIndex=$scope.physicians.selectedPhysicians.map(function(elem){return elem.email;})
+                           .indexOf(physician.email);
+       if(physicianIndex != -1){
+           return true;
+       }else{
+        return false;
+       }
+    }
+
+    $scope.savePhysicians=function(){
+        return $scope.physicians.selectedPhysicians.map(function(elem){return elem.id;})
     }
 
 });
