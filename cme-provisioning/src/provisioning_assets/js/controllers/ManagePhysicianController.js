@@ -48,7 +48,8 @@ appControllers.controller('ManagePhysicianController',function($scope,$http,CONS
     }
 
     $scope.savePhysicians=function(){
-        return $scope.physicians.selectedPhysicians.map(function(elem){return elem.id;})
+        //return $scope.physicians.selectedPhysicians.map(function(elem){return elem.id;})
+        return $scope.physicians.selectedPhysicians;
     }
 
 });

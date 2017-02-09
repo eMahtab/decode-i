@@ -60,6 +60,7 @@ app.get('/physician',physician.get);
 app.post('/phase',phase.create);
 app.post('/phase/:phase_id/initialize',phase.initialize);
 app.get('/phase',phase.get);
+app.post('/phase/:phase_name/initialAssignment',phase.initialAssignment);
 
 
 var port = process.env.PORT || 7000;
