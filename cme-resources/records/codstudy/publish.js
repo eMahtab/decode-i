@@ -8,7 +8,7 @@ var phases = ['mansa1'];
 var endpointURL = process.env.ENDPOINT_URL || 'http://localhost:7000';
 
 phases.forEach(function(phase) {
-	
+
 
    fs.readdir(__dirname + '/' + phase, function(err, files) {
 
@@ -17,7 +17,7 @@ phases.forEach(function(phase) {
    	var languageMap = { 'mansa1': 'Punjabi',  'anand': 'Gujarati'   };
 
      async.each(files, function(file, callback) {
-             if(!file.endsWith('.json')) { return callback(); }             
+             if(!file.endsWith('.json')) { return callback(); }
              var vaRecordFile = phase + '/' + file;
              console.log("File :"+vaRecordFile);
 
@@ -25,13 +25,17 @@ phases.forEach(function(phase) {
                if(err) { console.log('ERR: ' + JSON.stringify(err)); return callback(err); }
                var death = JSON.parse(data);
                if(!death.death) {return callback('deathId: ' + death.deathId + ' does not contain death');}
+							 console.log("summary "+death.death.sex+"   "+death.death.age_value+"    "+death.death.age_unit)
                var vaRecord = {
                   "deathId": death.deathId,
                   "study": "codstudy",
-                  "phase": phase,              
+                  "phase": phase,
                   "sex": death.death.sex,
                   "language": languageMap[phase],
-                  "script": "Latin"                 
+                  "script": "Latin",
+									"narrative": death.narrative.summary,
+									"age_value":death.death.age_value,
+									"age_unit":death.death.age_unit
                };
 
              vaRecordList.push(vaRecord);
@@ -55,7 +59,7 @@ phases.forEach(function(phase) {
     });
 
 
-  });  
+  });
 
 
-});	
+});

@@ -18,7 +18,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/cme-core/src'));
 app.use(express.static(__dirname + '/cme-provisioning/src'));
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 
 //app.use(expressJwt({ secret: jwtSecret }).unless({ path: ['/','/signup','/login']}));
 

@@ -1,6 +1,6 @@
 var appControllers=angular.module('app.controllers');
 
-appControllers.controller('PhysicianTaskController',function(CONSTANT,$scope,Storage,$http){
+appControllers.controller('PhysicianTasksController',function(CONSTANT,$scope,Storage,$http){
 
      var physician=Storage.retrieve('id')
      console.log("Retrieving "+physician);

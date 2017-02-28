@@ -12,7 +12,7 @@
 
       <tbody>
           <tr ng-repeat="task in tasks">
-              <td>{{task.record_id}}</td>
+              <td><a target="blank" ui-sref="task( {vaRecord:{{task.record_id}}} )">{{task.record_id}}</a></td>
               <td>{{task.task_status}}</td>
           </tr>
       </tbody>
