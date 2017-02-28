@@ -38,7 +38,7 @@ app.get('/cme-provisioning', function(req, res) {
 
 app.post('/physicianLogin',user.physicianLogin,function(req,res){
     var token = jwt.sign({username: req.body.username}, jwtSecret);
-    res.status(200).send({token: token,username: req.body.username});
+    res.status(200).send({token: token,username: req.body.username,id:req.body.id});
 });
 
 app.post('/provisioningLogin',user.provisioningLogin,function(req,res){

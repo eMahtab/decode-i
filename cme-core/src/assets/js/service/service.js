@@ -6,7 +6,8 @@ appService.service('Storage',function($window){
             getUsername: getUsername,
             setUsername: setUsername,
             remove:remove,
-            save:save
+            save:save,
+            retrieve:retrieve
       };
     function getUsername() {
       return store.getItem('username');
@@ -19,6 +20,10 @@ appService.service('Storage',function($window){
     }
     function save(key,value){
       return store.setItem(key,value);
+    }
+
+    function retrieve(key){
+      return store.getItem(key);
     }
 
 });

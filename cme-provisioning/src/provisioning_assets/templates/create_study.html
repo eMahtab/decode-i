@@ -1,22 +1,22 @@
 <div class="container">
-<div class="col-md-offset-2 page-content">
-     
-    
+<div class="col-md-offset-2 col-md-12 page-content">
+
+  <br/>
      <form name="studyForm" ng-controller="StudyController" ng-submit="processForm()" class="form-horizontal" novalidate>
 
-        <div class="col-md-9 form-group">
-         <label style="text-align: left;" class ="control-label col-md-2 ">Study name</label>
-         <div class="col-md-3">
+        <div class="col-md-6 form-group">
+         <label style="text-align: left;" class ="control-label col-md-4 ">Study name</label>
+         <div class="col-md-6">
              <input ng-model="formData.name" type="text" class="form-control" placeholder="Study Name">
          </div>
-        </div> 
+        </div>
 
          <br/>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-4">
+            <div class="col-md-offset-2 col-md-6">
               <button type="submit" class="btn btn-success">
-                <span>Save</span> 
+                <span>Save</span>
               </button>
               <!--  <pre>studyForm= {{ formData | json }}</pre>  -->
             </div>
@@ -27,5 +27,5 @@
 
 
 
-</div>  
-</div>   
+</div>
+</div>

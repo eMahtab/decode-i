@@ -1,38 +1,39 @@
 <div class="container">
 <div class="col-md-offset-2 page-content">
-     
-    
-     <form name="physicianForm" class="form-horizontal" novalidate>
+
+   <br/>
+
+     <form name="physicianForm" class="col-md-12 form-horizontal" novalidate>
 
         <div class="col-md-9 form-group">
-         <label style="text-align: left;" class ="control-label col-md-2 ">Select study</label>
+         <label style="text-align: left;" class ="control-label col-md-6 ">Select study</label>
          <div class="col-md-4">
              <select ng-model="formData.study" id="mySelect"
               ng-options="option.name for option in studies">
               <option value="" selected="selected"> ------ Select a study ------</option>
              </select>
          </div>
-        </div> 
+        </div>
 
-        <br/>  
+        <br/>
 
         <div class="col-md-9 form-group">
-         <label style="text-align: left;" class ="control-label col-md-2 ">Phase name</label>
-         <div class="col-md-3">
+         <label style="text-align: left;" class ="control-label col-md-6 ">Phase name</label>
+         <div class="col-md-6">
              <input ng-model="formData.phase" type="text" class="form-control" placeholder="Phase Name">
          </div>
-        </div>  
+        </div>
 
         <div class="col-md-9 form-group">
-         <label style="text-align: left;" class ="control-label col-md-2 ">Add physicians</label>
+         <label style="text-align: left;" class ="control-label col-md-6 ">Add physicians</label>
          <button ng-click="openPhysicianModal()">Add Physicians</button>
-        </div> 
+        </div>
 
-        <br/>  
+        <br/>
 
         <div class="col-md-9 form-group">
-         <label style="text-align: left;" class ="control-label col-md-2 ">Select VaRecords</label>
-              <select ng-change="fetchVARecordPhases()" 
+         <label style="text-align: left;" class ="control-label col-md-6 ">Select VaRecords</label>
+              <select ng-change="fetchVARecordPhases()"
               ng-model="formData.va_record_study" id="va_record_select_study"
               ng-options="option.study for option in vaRecord.studies">
               <option value="" selected="selected"> ------ Select a study ------</option>
@@ -40,18 +41,18 @@
 
              <select ng-model="formData.va_record_phase" id="va_record_select_phase"
               ng-options="option.phase for option in vaRecord.phases">
-              <option value="" selected="selected"> ------ Select a study ------</option>
+              <option value="" selected="selected"> ------ Select a phase ------</option>
              </select>
-        </div> 
+        </div>
 
          <br/>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-4">
+            <div class="col-md-offset-2 col-md-12">
               <button type="button" ng-click="processForm()" class="btn btn-success">
-                <span>Save</span> 
+                <span>Save</span>
               </button>
-                <pre>physicianForm= {{ formData | json }}</pre>  
+                <pre>physicianForm= {{ formData | json }}</pre>
             </div>
          </div>
 
@@ -60,5 +61,5 @@
 
 
 
-</div>  
-</div>   
+</div>
+</div>

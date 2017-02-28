@@ -1,29 +1,29 @@
 <div class="container">
 <div class="col-md-offset-2 page-content">
-     
-    
-     <form name="physicianForm" ng-controller="PhysicianController" ng-submit="processForm()" class="form-horizontal" novalidate>
 
-        <div class="col-md-9 form-group">
-         <label style="text-align: left;" class ="control-label col-md-2 ">Physician name</label>
-         <div class="col-md-4">
+
+     <form name="physicianForm" ng-controller="PhysicianController" ng-submit="processForm()" class="col-md-12 form-horizontal" novalidate>
+
+        <div class="form-group">
+         <label style="text-align: left;" class ="control-label col-md-6 ">Physician name</label>
+         <div class="col-md-6">
              <input ng-model="formData.name" type="text" class="form-control" placeholder="Physician Name">
          </div>
-        </div> 
+        </div>
 
         <br/>
 
-        <div class="col-md-9 form-group">
-         <label style="text-align: left;" class ="control-label col-md-2 ">Email</label>
-         <div class="col-md-4">
+        <div class="form-group">
+         <label style="text-align: left;" class ="control-label col-md-6 ">Email</label>
+         <div class="col-md-6">
              <input ng-model="formData.email" type="text" class="form-control" placeholder="Email">
          </div>
         </div>
 
         <br/>
 
-        <div class="col-md-9 form-group">
-         <label style="text-align: left;" class ="control-label col-md-2 ">Physician role</label>
+        <div class="form-group">
+         <label style="text-align: left;" class ="control-label col-md-6 ">Physician role</label>
          <div class="col-sm-6">
            <label class="radio-inline">
             <input ng-required="true" type="radio" ng-model="formData.role" name="sex" value="coder">
@@ -36,21 +36,21 @@
            <label class="radio-inline">
             <input ng-required="true" type="radio" ng-model="formData.role" name="sex" value="coder,adjudicator">
              Both Coder and Adjudicator
-           </label>           
+           </label>
          </div>
         </div>
 
         <br/>
- 
+
 
          <br/>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-4">
+            <div class="col-md-offset-2 col-md-12">
               <button type="submit" class="btn btn-success">
-                <span>Save</span> 
+                <span>Save</span>
               </button>
-                <pre>physicianForm= {{ formData | json }}</pre>  
+                <pre>physicianForm= {{ formData | json }}</pre>
             </div>
          </div>
 
@@ -59,5 +59,5 @@
 
 
 
-</div>  
-</div>   
+</div>
+</div>

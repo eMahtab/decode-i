@@ -8,9 +8,11 @@ appControllers.controller('LoginController',function($state,$scope,UserService,A
      var request_body={"email":email,"password":password};
      UserService.login(request_body)
      .then(function(response){
+             console.log("RESPONSE IS "+JSON.stringify(response));
              AuthTokenFactory.setToken(response.data.token);
              Storage.save('username',response.data.username);
              Storage.save('loggedIn',true);
+             Storage.save('id',response.data.id);
              $state.go('tasks');
            },
            function(error){ $scope.loginError="Oops! Invalid email or password";});
