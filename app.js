@@ -12,6 +12,7 @@ var va_record=require('./routes/record.js');
 var study=require('./routes/study.js');
 var physician=require('./routes/physician.js');
 var phase=require('./routes/phase.js');
+var tasks=require('./routes/tasks.js');
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/cme-core/src'));
@@ -61,6 +62,8 @@ app.post('/phase',phase.create);
 app.post('/phase/:phase_id/initialize',phase.initialize);
 app.get('/phase',phase.get);
 app.post('/phase/:phase_name/initialAssignment',phase.initialAssignment);
+
+app.get('/tasks/physician/:physician',tasks.retrieveTasks);
 
 
 var port = process.env.PORT || 7000;
