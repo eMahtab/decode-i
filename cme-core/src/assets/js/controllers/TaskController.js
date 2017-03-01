@@ -3,7 +3,9 @@ var appControllers=angular.module('app.controllers');
 appControllers.controller('TaskController',function(CONSTANT,$scope,Storage,$http,$stateParams,$state){
 
     console.log("Inside task controller "+$stateParams.vaRecord);
+    console.log("Complete state param "+JSON.stringify($stateParams));
     $scope.currentICD = null;
+    $scope.record=null
 
     $scope.fetchICDs=function(){
 
@@ -42,6 +44,28 @@ appControllers.controller('TaskController',function(CONSTANT,$scope,Storage,$htt
       var icd_code=phy_icd.split("-")[0].trim();
       console.log("ICD "+icd_code);
       console.log("Comments "+$scope.coding.comments)
+
+      var post_body={};
+
+      if($stateParams.task.task_status == 'Coding'){
+        if(Storage.retrieve('id') == $stateParams.task.phy_1_id){
+                 post_body['phy_1_coding_icd']=icd_code;
+                 post_body['phy_1_comments']=$scope.coding.comments;
+        }else{
+                 post_body['phy_2_coding_icd']=icd_code;
+                 post_body['phy_2_comments']=$scope.coding.comments;
+        }
+      }
+
+
+
+
+      $http.post(CONSTANT.API_URL+'/task/'+$stateParams.task.id,JSON.stringify(post_body),
+          {headers:{"Content-Type":"application/json"}})
+     .then(function(re){
+       console.log("Last Request"+JSON.stringify(re));
+       return re;
+     })
 
     }
 

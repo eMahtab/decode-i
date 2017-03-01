@@ -1,6 +1,6 @@
 var appControllers=angular.module('app.controllers');
 
-appControllers.controller('PhysicianTasksController',function(CONSTANT,$scope,Storage,$http){
+appControllers.controller('PhysicianTasksController',function(CONSTANT,$state,$scope,Storage,$http){
 
      var physician=Storage.retrieve('id')
      console.log("Retrieving "+physician);
@@ -11,5 +11,11 @@ appControllers.controller('PhysicianTasksController',function(CONSTANT,$scope,St
          console.log("Number of tasks  "+res.data.length);
          $scope.tasks=res.data;
      });
+
+
+     $scope.openTask=function(task){
+       console.log("Task is "+JSON.stringify(task));
+       $state.go('task',{'taskId':task.id,'vaRecord':task.record_id,'task':task})
+     }
 
 });

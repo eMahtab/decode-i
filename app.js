@@ -65,6 +65,7 @@ app.get('/phase',phase.get);
 app.post('/phase/:phase_name/initialAssignment',phase.initialAssignment);
 
 app.get('/tasks/physician/:physician',tasks.retrieveTasks);
+app.post('/task/:taskId',tasks.updateTask);
 
 
 var port = process.env.PORT || 7000;

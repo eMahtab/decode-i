@@ -1,8 +1,6 @@
 <div class="container">
      <h1 align="center">Tasks !</h1>
-
      <table class="table table-bordered">
-
      <thead>
        <tr>
          <th>Record ID</th>
@@ -12,13 +10,15 @@
 
       <tbody>
           <tr ng-repeat="task in tasks">
-              <td><a target="blank" ui-sref="task( {vaRecord:{{task.record_id}}} )">{{task.record_id}}</a></td>
+            <!--  <td><a  ui-sref="task( { vaRecord:{{task.record_id}} , taskId:{{task.id}} , task_data:task  } )">{{task.record_id}}</a></td>-->
+              <td>
+                <a  ng-click="openTask(task)">
+                {{task.record_id}}</a>
+              </td>
+
               <td>{{task.task_status}}</td>
           </tr>
       </tbody>
 
-
     </table>
-
-
 </div>

@@ -19,9 +19,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller:'PhysicianTasksController'
         })
         .state('task', {
-            url: '/task/:vaRecord',
+            url: '/task/:taskId/vaRecord/:vaRecord',
             templateUrl: 'assets/templates/task.html',
-            controller:'TaskController'
+            controller:'TaskController',
+            params:{task:null}
         });
 
 });
