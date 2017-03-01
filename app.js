@@ -48,6 +48,7 @@ app.post('/provisioningLogin',user.provisioningLogin,function(req,res){
 });
 
 app.post('/vaRecord',va_record.create);
+app.get('/vaRecord/:vaRecordId',va_record.getRecord);
 app.get('/vaRecord/study/distinct',va_record.getStudy);
 app.get('/vaRecord/study/distinct/:studyName/phase/distinct',va_record.getPhase);
 app.get('/vaRecord/study/:study_name/phase/:phase_name',va_record.getPhaseRecords);

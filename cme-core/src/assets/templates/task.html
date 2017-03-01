@@ -1,3 +1,74 @@
 <div class="container">
-     <h1 align="center">Individual Task</h1>
+   <br/><br/>
+    <div class="col-md-4">
+
+    <div class="panel panel-default">
+     <div id="content" class="panel-body">
+         <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+             <li class="active"><a href="#narrative" data-toggle="tab">Narrative</a></li>
+             <li><a href="#otherinfo" data-toggle="tab">Other information</a></li>
+         </ul>
+         <div id="my-tab-content" class="tab-content">
+             <div class="tab-pane active" id="narrative">
+                 <p>{{record.narrative}}</p>
+             </div>
+             <div class="tab-pane" id="otherinfo">
+                 <p>Other information</p>
+             </div>
+         </div>
+     </div>
+   </div>
+
+ </div>
+
+
+       <div class="col-md-5">
+         <div class="panel panel-default">
+
+           <div class="panel-body">
+                <form>
+                 <input ng-model="coding.icd" type="text" class="form-control"
+                        ng-change="searchICD()" placeholder="Select an ICD">
+                </form>
+
+                <ul style="list-style: none;">
+                  <br/>
+                  <li  ng-click="selectICD(icd)"
+                       ng-style="{'cursor': 'pointer', 'background-color': $index == currentICD ? 'lightgray' : ''}"
+                       ng-mouseenter="highlight($index)"
+                       ng-repeat="icd in who_icd | filter:coding.icd">
+                      <div style="margin-left:30px">
+                           <span>{{icd.icd}}</span><br/>
+                           <span>{{icd.description}}</span>
+                      </div>
+                    <br/>
+                  </li>
+
+                </ul>
+
+           </div>
+
+         </div>
+       </div>
+
+       <div class="col-md-3">
+         <div class="panel panel-default">
+
+           <div class="panel-body">
+
+                   <form>
+                     <textarea style="resize:none" rows="6" cols="60" class="form-control" ng-model="coding.comments">
+                     </textarea>
+                   </form>
+
+           </div>
+
+           <div class="panel-footer clearfix">
+             <button ng-click="save()" class="btn btn-success pull-left">Save</button>
+             <button ng-click="clear()" class="btn btn-danger pull-right" >Clear</button>
+           </div>
+         </div>
+       </div>
+
+
 </div>

@@ -28,6 +28,15 @@ exports.create=function(req,res){
 
 }
 
+exports.getRecord=function(req,res){
+   console.log("Fetching record "+req.params.vaRecordId)
+   var sql = "SELECT * FROM va_record WHERE deathId='"+req.params.vaRecordId+"'";
+   db.query(sql,function(err,result) {
+    if (err) return res.status(500).send(err);
+    return res.status(200).json(result);
+    });
+}
+
 exports.getStudy=function(req,res){
    console.log("Distinct Study ");
    var sql = "SELECT distinct study FROM va_record";
