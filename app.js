@@ -14,6 +14,9 @@ var physician=require('./routes/physician.js');
 var phase=require('./routes/phase.js');
 var tasks=require('./routes/tasks.js');
 
+var icdEquivalence=require('./routes/icd-equivalence.js');
+
+
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/cme-core/src'));
 app.use(express.static(__dirname + '/cme-provisioning/src'));
@@ -66,6 +69,8 @@ app.post('/phase/:phase_name/initialAssignment',phase.initialAssignment);
 
 app.get('/tasks/physician/:physician',tasks.retrieveTasks);
 app.post('/task/:taskId',tasks.updateTask);
+
+app.post('/icdEquivalence',icdEquivalence.create);
 
 
 var port = process.env.PORT || 7000;
