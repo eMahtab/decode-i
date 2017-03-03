@@ -175,7 +175,7 @@ exports.initialAssignment=function(req,res){
                      assignment_array.push(assignment);
                      console.log("Coders Map "+JSON.stringify(first_coders_map)+JSON.stringify(second_coders_map));
                      console.log("Assignment "+assignment);
-                     var update_tasks="UPDATE tasks SET phy_1_id=? , phy_2_id=?, task_status='Coding' where id=?";
+                     var update_tasks="UPDATE tasks SET phy_1_id=? , phy_2_id=?, task_status='CodingAssigned' where id=?";
                      db.query(update_tasks,assignment,function (er, results, fields){
                          if (er) {console.log("Error "+JSON.stringify(er));return res.status(500).send(er);}
                          else{

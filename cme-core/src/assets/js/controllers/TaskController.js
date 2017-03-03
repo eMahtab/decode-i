@@ -47,7 +47,7 @@ appControllers.controller('TaskController',function(CONSTANT,$scope,Storage,$htt
 
       var post_body={};
 
-      if($stateParams.task.task_status == 'Coding'){
+      if($stateParams.task.task_status == 'CodingAssigned'){
         if(Storage.retrieve('id') == $stateParams.task.phy_1_id){
                  post_body['phy_1_coding_icd']=icd_code;
                  post_body['phy_1_comments']=$scope.coding.comments;

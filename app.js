@@ -71,6 +71,7 @@ app.get('/tasks/physician/:physician',tasks.retrieveTasks);
 app.post('/task/:taskId',tasks.updateTask);
 
 app.post('/icdEquivalence',icdEquivalence.create);
+app.get('/icdEquivalence/match',icdEquivalence.match);
 
 
 var port = process.env.PORT || 7000;
