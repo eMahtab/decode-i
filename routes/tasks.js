@@ -7,8 +7,11 @@ exports.retrieveTasks=function(req,res){
 
    var sql = "SELECT * FROM tasks WHERE ("+
              "(phy_1_id="+req.params.physician+" AND phy_1_coding_icd IS NULL) "+
-             " OR (phy_2_id="+req.params.physician+" AND phy_2_coding_icd IS NULL)"+" )"+
-              "AND task_status != 'Complete'";
+             " OR (phy_2_id="+req.params.physician+" AND phy_2_coding_icd IS NULL))"+
+             " OR ((phy_1_id="+req.params.physician+" AND phy_1_reconciliation_icd IS NULL AND task_status='ReconciliationAssigned')"+
+                    "OR (phy_2_id="+req.params.physician+" AND phy_2_reconciliation_icd IS NULL AND task_status='ReconciliationAssigned'))";
+
+              //"AND task_status != 'Complete'";
    console.log("Query is "+sql);
 
    db.query(sql,function(err,result) {
