@@ -90,7 +90,7 @@ exports.initialize=function(req,res){
 }
 
 exports.initialAssignment=function(req,res){
-     console.log("Doing Initial assignment");
+     console.log("Doing Initial assignment Request "+req);
      //first we have to find the number of records to be coded
      //find all the coder physicians
      //id of all coder physicians -
@@ -179,29 +179,17 @@ exports.initialAssignment=function(req,res){
                      db.query(update_tasks,assignment,function (er, results, fields){
                          if (er) {console.log("Error "+JSON.stringify(er));return res.status(500).send(er);}
                          else{
-                            console.log("Single update "+JSON.stringify(results));
-                            //return res.status(200).json(results);
-                         }
+                            console.log("Assigning task "+JSON.stringify(results));
+                             }
                      })
 
                    }
               });
 
-            /*  console.log("Assignment array "+JSON.stringify(assignment_array));
-
-                  var update_tasks="UPDATE tasks SET phy_1_id=? , phy_2_id=? where id=?";
-                  db.query(update_tasks,[ ['-1','-1','10086'],['-1','-1','10087'] ],function (er, results, fields){
-                      if (er) {console.log("Error "+JSON.stringify(er));return res.status(500).send(er);}
-                      else{
-                        return res.status(200).json(results);
-                      }
-                  })*/
-
-
-              //return res.status(200).json(result);
             }
 
              });
+             return res.status(200).json({"message":"Initial task assignment done"});
        }
 
     });

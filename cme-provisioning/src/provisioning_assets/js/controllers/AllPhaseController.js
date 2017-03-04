@@ -59,7 +59,7 @@ appControllers.controller('AllPhaseController',function($scope,$http,CONSTANT,to
          .then(function(res){
                  toaster.pop('success',"Phase Started");
                  $scope.fetchAllPhases();
-
+                 console.log("Calling Initial Assignment from client");
                  $http.post(CONSTANT.API_URL+'/phase/'+phase.phase_name+'/initialAssignment',JSON.stringify(phase),
                      {headers:{"Content-Type":"application/json"}})
                 .then(function(re){
