@@ -38,12 +38,14 @@ exports.updateTask=function(req,res){
      else{
        console.log("Task to update is "+JSON.stringify(result));
 
+       if(result[0].task_status == 'CodingAssigned'){
+
        if(result[0].phy_1_coding_icd == null && result[0].phy_2_coding_icd == null){
                  updateTaskInDB(req.body,req.params.taskId);
                  return res.status(200).json({"message":"Task is updated successfully"});
        }
 
-       if(result[0].phy_1_coding_icd != null){
+       else if(result[0].phy_1_coding_icd != null){
              console.log("First physician have already coded");
              //Check whether coding icds are equal or equivalent, If not send for Reconciliation
              if(result[0].phy_1_coding_icd == req.body['phy_2_coding_icd']){
@@ -72,7 +74,7 @@ exports.updateTask=function(req,res){
                   }
        }
 
-       if(result[0].phy_2_coding_icd != null){
+      else if(result[0].phy_2_coding_icd != null){
             console.log("Second physician have already coded");
             //Check whether coding icds are equal or equivalent, If not send for Reconciliation
 
@@ -99,6 +101,76 @@ exports.updateTask=function(req,res){
                         return res.status(200).json({"message":"Task is updated successfully"});
                     });
               }
+       }
+
+     }
+
+       else if(result[0].task_status == 'ReconciliationAssigned'){
+         console.log("Doing Reconciliation task update")
+
+         if(result[0].phy_1_reconciliation_icd == null && result[0].phy_2_reconciliation_icd == null){
+                   updateTaskInDB(req.body,req.params.taskId);
+                   return res.status(200).json({"message":"Task is updated successfully"});
+         }
+
+         else if(result[0].phy_1_reconciliation_icd != null){
+               console.log("First physician have already reconciled");
+               //Check whether coding icds are equal or equivalent, If not send for Reconciliation
+               if(result[0].phy_1_reconciliation_icd == req.body['phy_2_reconciliation_icd']){
+                 console.log("Both reconciliation ICDs are equal");
+                 //update_task_status=" task_status='Complete ,' ";
+                 req.body['task_status']='Complete'
+                 updateTaskInDB(req.body,req.params.taskId);
+                 return res.status(200).json({"message":"Task is updated successfully"});
+               }
+               else{
+               request(
+                       {uri: "http://localhost:7000/icdEquivalence/match?icd1="+result[0].phy_1_reconciliation_icd+"&icd2="+req.body['phy_2_reconciliation_icd'],method: "GET"},
+                        function(error, response, data) {
+                           match_result=JSON.parse(data);
+                           console.log("Got Result "+JSON.stringify(match_result))
+                           if(match_result.length != 0){
+                             console.log("1. Both Reconciliation ICDs are equivalent "+match_result.length);
+                             req.body['task_status']='Complete'
+                           }else{
+                             console.log("Both Reconciliation ICDs are not equivalent");
+                             req.body['task_status']='AdjudicationAssignmentPending'
+                           }
+                            updateTaskInDB(req.body,req.params.taskId);
+                            return res.status(200).json({"message":"Task is updated successfully"});
+                       });
+                    }
+         }
+
+         else if(result[0].phy_2_reconciliation_icd != null){
+               console.log("Second physician have already reconciled");
+               //Check whether coding icds are equal or equivalent, If not send for Reconciliation
+
+               if(req.body['phy_1_reconciliation_icd'] == result[0].phy_2_reconciliation_icd){
+                 console.log("Both Reconciliation ICDs are equal");
+                 req.body['task_status']='Complete'
+                 updateTaskInDB(req.body,req.params.taskId);
+                 return res.status(200).json({"message":"Task is updated successfully"});
+               }
+               else{
+               request(
+                       {uri: "http://localhost:7000/icdEquivalence/match?icd1="+req.body['phy_1_reconciliation_icd']+"&icd2="+result[0].phy_2_reconciliation_icd,method: "GET"},
+                        function(error, response, data) {
+                           match_result=JSON.parse(data);
+                           console.log("Got Result "+JSON.stringify(match_result))
+                           if(match_result.length != 0){
+                             console.log("2. Both Reconciliation ICDs are equivalent "+match_result.length);
+                             req.body['task_status']='Complete'
+                           }else{
+                             console.log("Both Reconciliation ICDs are not equivalent");
+                             req.body['task_status']='AdjudicationAssignmentPending'
+                           }
+                           updateTaskInDB(req.body,req.params.taskId);
+                           return res.status(200).json({"message":"Task is updated successfully"});
+                       });
+                 }
+          }
+
        }
        //return res.status(200).json(result);
      }

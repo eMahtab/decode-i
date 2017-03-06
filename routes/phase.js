@@ -5,6 +5,7 @@ exports.create=function(req,res){
    var body=req.body;
    console.log("Phase Creation Body "+JSON.stringify(body));
    var phasePhysicians=body.selectedPhysicians.toString();
+   //var phasePhysicians=body.selectedPhysicians;
    var vaRecordsPhase=body.va_record_study.study+"::"+body.va_record_phase.phase;
    console.log("Phase "+JSON.stringify(req.body));
    var post_body={"study_name":body.study.name,"phase_name":body.phase,"physicians":phasePhysicians,
@@ -114,6 +115,8 @@ exports.initialAssignment=function(req,res){
               }
             });
 
+            console.log("Coders count "+coders.length);
+
           for(n=0;n<coders.length;n++){
              if(n<coders.length/2){
               first_coders.push(coders[n]);
@@ -150,8 +153,8 @@ exports.initialAssignment=function(req,res){
                var assignment_array=[];
               tasks.forEach(function(task){
                    var assignment=[]
-                   assignment[0]=-1;
-                   assignment[1]=-1;
+                   assignment[0]=null;
+                   assignment[1]=null;
                    assignment[2]=task.id;
 
                    for(var phy1 in first_coders_map){
@@ -171,7 +174,8 @@ exports.initialAssignment=function(req,res){
                      }
                    }
                    assignment[2]=task.id;
-                   if(assignment[0]!=-1 && assignment[1]!=-1){
+                   //if(assignment[0]!=null && assignment[1]!=null){
+                   if(assignment[0]!=null){
                      assignment_array.push(assignment);
                      console.log("Coders Map "+JSON.stringify(first_coders_map)+JSON.stringify(second_coders_map));
                      console.log("Assignment "+assignment);

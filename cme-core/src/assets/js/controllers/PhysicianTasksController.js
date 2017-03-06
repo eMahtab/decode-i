@@ -3,6 +3,7 @@ var appControllers=angular.module('app.controllers');
 appControllers.controller('PhysicianTasksController',function(CONSTANT,$state,$scope,Storage,$http){
 
      var physician=Storage.retrieve('id')
+     $scope.username=Storage.retrieve('username')
      console.log("Retrieving "+physician);
 
      $http.get(CONSTANT.API_URL+"/tasks/physician/"+physician)

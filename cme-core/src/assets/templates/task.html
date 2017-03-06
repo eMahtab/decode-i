@@ -56,12 +56,25 @@
 
            <div class="panel-body">
 
-             <!-- comments if any
-             <div ng-show="">
-                  <ul>
-                    <li ng-repeat=""
-                  </ul>
-             </div> -->
+             <!-- comments if any -->
+             <div ng-show="show_your_coding_comment">
+                  <span>
+                    <b>Your coding </b><br/>
+                    {{comments.your_coding}}
+                  </span>
+             </div>
+             <div ng-show="show_other_physicians_coding_comment">
+                  <span>
+                    <b>Other physician's coding </b><br/>
+                    {{comments.other_physician_coding}}
+                  </span>
+             </div>
+             <div ng-show="show_other_physicians_reconciliation_comment">
+                  <span>
+                    <b>Other physician's Reconciliation </b><br/>
+                    {{comments.other_physician_reconciliation}}
+                  </span>
+             </div>
 
                    <form>
                      <textarea style="resize:none" rows="6" cols="60" class="form-control" ng-model="coding.comments">

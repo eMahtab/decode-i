@@ -5,15 +5,72 @@ appControllers.controller('TaskController',function(CONSTANT,$scope,Storage,$htt
     console.log("Inside task controller "+$stateParams.vaRecord);
     console.log("Complete state param "+JSON.stringify($stateParams));
     $scope.currentICD = null;
-    $scope.record=null
+    $scope.record=null;
+
+    $scope.comments={'other_physician_coding':"none","other_physician_reconciliation":"none","your_coding":"none"};
+    $scope.show_other_physicians_coding_comment=false;
+    $scope.show_other_physicians_reconciliation_comment=false;
+    $scope.show_your_coding_comment=false;
 
     $scope.fetchICDs=function(){
-
       $http.get('assets/data/icd.json')
         .then(function(result) {
                    $scope.who_icd=result.data;
                 });
     }
+
+    $scope.showComments=function(){
+
+      if($stateParams.task.task_status == 'CodingAssigned' || $stateParams.task.task_status == 'ReconciliationAssigned'){
+        /*if(Storage.retrieve('id') == $stateParams.task.phy_1_id && $stateParams.task['phy_2_coding_icd'] != null){
+          $scope.show_other_physicians_coding_comment=true;
+          console.log("Other P Coding Comment "+$stateParams.task['phy_2_coding_icd']+" - "+$stateParams.task['phy_2_comments']);
+          $scope.comments['other_physician_coding']=$stateParams.task['phy_2_coding_icd']+" - "+$stateParams.task['phy_2_comments'];
+        }
+        if(Storage.retrieve('id') == $stateParams.task.phy_2_id && $stateParams.task['phy_1_coding_icd'] != null){
+          $scope.show_other_physicians_coding_comment=true;
+          console.log("Other P Coding Comment "+$stateParams.task['phy_1_coding_icd']+" - "+$stateParams.task['phy_1_comments']);
+          $scope.comments['other_physician_coding']=$stateParams.task['phy_1_coding_icd']+" - "+$stateParams.task['phy_1_comments'];
+        }*/
+      }
+
+      if($stateParams.task.task_status == 'ReconciliationAssigned'){
+            $scope.show_your_coding_comment=true;
+            console.log("Top executed")
+            if(Storage.retrieve('id') == $stateParams.task.phy_1_id && $stateParams.task['phy_2_coding_icd'] != null){
+              $scope.show_other_physicians_coding_comment=true;
+              console.log("Other P Coding Comment "+$stateParams.task['phy_2_coding_icd']+" - "+$stateParams.task['phy_2_comments']);
+              $scope.comments['other_physician_coding']=$stateParams.task['phy_2_coding_icd']+" - "+$stateParams.task['phy_2_comments'];
+            }
+            if(Storage.retrieve('id') == $stateParams.task.phy_2_id && $stateParams.task['phy_1_coding_icd'] != null){
+              $scope.show_other_physicians_coding_comment=true;
+              console.log("Other P Coding Comment "+$stateParams.task['phy_1_coding_icd']+" - "+$stateParams.task['phy_1_comments']);
+              $scope.comments['other_physician_coding']=$stateParams.task['phy_1_coding_icd']+" - "+$stateParams.task['phy_1_comments'];
+            }
+
+        if(Storage.retrieve('id') == $stateParams.task.phy_1_id ){
+          $scope.comments['your_coding']=$stateParams.task['phy_1_coding_icd']+" - "+$stateParams.task['phy_1_comments'];
+          console.log("First reconciliation block executed")
+          if($stateParams.task['phy_2_reconciliation_icd'] != null){
+          $scope.show_other_physicians_reconciliation_comment=true;
+          console.log("Other P Reconciliation Comment "+$stateParams.task['phy_2_reconciliation_icd']+" - "+$stateParams.task['phy_2_reconciliation_comments']);
+          $scope.comments['other_physician_reconciliation']=$stateParams.task['phy_2_reconciliation_icd']+" - "+$stateParams.task['phy_2_reconciliation_comments'];
+           }
+        }
+
+        if(Storage.retrieve('id') == $stateParams.task.phy_2_id){
+          $scope.comments['your_coding']=$stateParams.task['phy_2_coding_icd']+" - "+$stateParams.task['phy_2_comments'];
+          console.log("Second reconciliation block executed")
+          if($stateParams.task['phy_1_reconciliation_icd'] != null){
+          $scope.show_other_physicians_reconciliation_comment=true;
+          console.log("Other P Reconciliation Comment "+$stateParams.task['phy_1_reconciliation_icd']+" - "+$stateParams.task['phy_1_reconciliation_comments']);
+          $scope.comments['other_physician_reconciliation']=$stateParams.task['phy_1_reconciliation_icd']+" - "+$stateParams.task['phy_1_reconciliation_comments'];
+          }
+        }
+      }
+    }
+
+    $scope.showComments();
 
     $scope.highlight=function(index){
        $scope.currentICD = index;
@@ -57,8 +114,16 @@ appControllers.controller('TaskController',function(CONSTANT,$scope,Storage,$htt
         }
       }
 
+      else if($stateParams.task.task_status == 'ReconciliationAssigned'){
+        if(Storage.retrieve('id') == $stateParams.task.phy_1_id){
+                 post_body['phy_1_reconciliation_icd']=icd_code;
+                 post_body['phy_1_reconciliation_comments']=$scope.coding.comments;
+        }else{
+                 post_body['phy_2_reconciliation_icd']=icd_code;
+                 post_body['phy_2_reconciliation_comments']=$scope.coding.comments;
+        }
 
-
+      }
 
       $http.post(CONSTANT.API_URL+'/task/'+$stateParams.task.id,JSON.stringify(post_body),
           {headers:{"Content-Type":"application/json"}})
@@ -72,5 +137,7 @@ appControllers.controller('TaskController',function(CONSTANT,$scope,Storage,$htt
     $scope.clear=function(){
       console.log("Clear")
     }
+
+
 
 });
