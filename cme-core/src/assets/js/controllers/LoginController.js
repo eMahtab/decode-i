@@ -13,6 +13,7 @@ appControllers.controller('LoginController',function($state,$scope,UserService,A
              Storage.save('username',response.data.username);
              Storage.save('loggedIn',true);
              Storage.save('id',response.data.id);
+             Storage.save('role',response.data.role);
              $state.go('tasks');
            },
            function(error){ $scope.loginError="Oops! Invalid email or password";});

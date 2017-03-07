@@ -42,7 +42,7 @@ app.get('/cme-provisioning', function(req, res) {
 
 app.post('/physicianLogin',user.physicianLogin,function(req,res){
     var token = jwt.sign({username: req.body.username}, jwtSecret);
-    res.status(200).send({token: token,username: req.body.username,id:req.body.id});
+    res.status(200).send({token: token,username: req.body.username,id:req.body.id,role:req.body.role});
 });
 
 app.post('/provisioningLogin',user.provisioningLogin,function(req,res){
@@ -68,7 +68,8 @@ app.get('/phase',phase.get);
 app.post('/phase/:phase_name/initialAssignment',phase.initialAssignment);
 
 app.get('/tasks/physician/:physician',tasks.retrieveTasks);
-app.post('/task/:taskId',tasks.updateTask);
+app.post('/physician/:physician_id/role/:physician_role/task/:taskId',tasks.updateTask);
+app.post('/assign_new_coding_task/phase/:phase_name/coder_id/:id',tasks.assignNewCoding);
 
 app.post('/icdEquivalence',icdEquivalence.create);
 app.get('/icdEquivalence/match',icdEquivalence.match);

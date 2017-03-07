@@ -125,7 +125,7 @@ appControllers.controller('TaskController',function(CONSTANT,$scope,Storage,$htt
 
       }
 
-      $http.post(CONSTANT.API_URL+'/task/'+$stateParams.task.id,JSON.stringify(post_body),
+      $http.post(CONSTANT.API_URL+'/physician/'+Storage.retrieve('id')+'/role/'+Storage.retrieve('role')+'/task/'+$stateParams.task.id,JSON.stringify(post_body),
           {headers:{"Content-Type":"application/json"}})
      .then(function(re){
        console.log("Last Request"+JSON.stringify(re));

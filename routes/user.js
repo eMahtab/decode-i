@@ -10,7 +10,7 @@ exports.physicianLogin=function authenticate(req, res, next) {
 
   var encrypted_password=md5(body.password);
   console.log("Encrypting Password "+encrypted_password);
-  db.query("SELECT users.name,physicians.id FROM users JOIN physicians ON users.email=physicians.email where users.email=? and users.password=? and users.role='user' ",[req.body.email,encrypted_password],function(err, rows) {
+  db.query("SELECT users.name,physicians.id,physicians.role FROM users JOIN physicians ON users.email=physicians.email where users.email=? and users.password=? and users.role='user' ",[req.body.email,encrypted_password],function(err, rows) {
 
        if(rows.length==0){
          console.log("User does not exist");
@@ -19,6 +19,7 @@ exports.physicianLogin=function authenticate(req, res, next) {
           console.log("P ID is "+rows[0].id);
           req.body.username=rows[0].name;
           req.body.id=rows[0].id;
+          req.body.role=rows[0].role;
           next();
        }
   });
