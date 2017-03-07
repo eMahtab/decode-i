@@ -6,10 +6,11 @@ exports.retrieveTasks=function(req,res){
    var physician_one=false;
 
    var sql = "SELECT * FROM tasks WHERE ("+
-             "(phy_1_id="+req.params.physician+" AND phy_1_coding_icd IS NULL) "+
-             " OR (phy_2_id="+req.params.physician+" AND phy_2_coding_icd IS NULL))"+
-             " OR ((phy_1_id="+req.params.physician+" AND phy_1_reconciliation_icd IS NULL AND task_status='ReconciliationAssigned')"+
-                    "OR (phy_2_id="+req.params.physician+" AND phy_2_reconciliation_icd IS NULL AND task_status='ReconciliationAssigned'))";
+             "(phy_1_id="+req.params.physician+" AND phy_1_coding_icd IS NULL) OR "+
+             "(phy_2_id="+req.params.physician+" AND phy_2_coding_icd IS NULL))"+
+             "OR ((phy_1_id="+req.params.physician+" AND phy_1_reconciliation_icd IS NULL AND task_status='ReconciliationAssigned')"+
+                    "OR (phy_2_id="+req.params.physician+" AND phy_2_reconciliation_icd IS NULL AND task_status='ReconciliationAssigned'))"+
+             "OR (adjudicator_id="+req.params.physician+" AND task_status='AdjudicationAssigned')" ;
 
               //"AND task_status != 'Complete'";
    console.log("Query is "+sql);
@@ -200,6 +201,12 @@ exports.updateTask=function(req,res){
                  }
           }
 
+       }
+
+       else if(result[0].task_status == 'AdjudicationAssigned'){
+          req.body['task_status']='Complete'
+          updateTaskAndAssignNewTask(task_phase_name,req.params.taskId,req.body,physician_id,physician_role);
+          return res.status(200).json({"message":"Task is updated successfully"});
        }
        //return res.status(200).json(result);
      }

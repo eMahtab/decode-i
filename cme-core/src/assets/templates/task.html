@@ -56,7 +56,7 @@
 
            <div class="panel-body">
 
-             <!-- comments if any -->
+            <div ng-show="task_status == 'ReconciliationAssigned'">
              <div ng-show="show_your_coding_comment">
                   <span>
                     <b>Your coding </b><br/>
@@ -75,6 +75,38 @@
                     {{comments.other_physician_reconciliation}}
                   </span>
              </div>
+           </div>
+
+
+           <div ng-show="task_status == 'AdjudicationAssigned'">
+             <h4>Physician 1</h4>
+            <div ng-show="show_your_coding_comment">
+                 <span>
+                   <b>Coding </b><br/>
+                   {{comments.your_coding}}
+                 </span>
+            </div>
+            <div ng-show="show_your_reconciliation_comment">
+                 <span>
+                   <b>Reconciliation</b><br/>
+                   {{comments.your_reconciliation}}
+                 </span>
+            </div>
+
+            <h4>Physician 2</h4>
+            <div ng-show="show_other_physicians_coding_comment">
+                 <span>
+                   <b>Coding</b><br/>
+                   {{comments.other_physician_coding}}
+                 </span>
+            </div>
+            <div ng-show="show_other_physicians_reconciliation_comment">
+                 <span>
+                   <b>Reconciliation</b><br/>
+                   {{comments.other_physician_reconciliation}}
+                 </span>
+            </div>
+          </div>
 
                    <form>
                      <textarea style="resize:none" rows="6" cols="60" class="form-control" ng-model="coding.comments">
