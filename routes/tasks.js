@@ -46,9 +46,7 @@ exports.assignNewCoding=function(req,res){
                  }
              }
       });
-
 }
-
 
 
 exports.updateTask=function(req,res){
@@ -249,6 +247,7 @@ function updateTaskAndAssignNewTask(phase_name,task_id,update_body,physician_id,
                                       else{
                                         console.log("NEW TASK ASSIGNMENT "+JSON.stringify(new_task))
                                         console.log("New task is assigned successfully");
+                                        checkForAdjudicationAssignment(phase_name)
                                         // Call adjudication assignment tasks
                                       }
                                     });
@@ -256,10 +255,7 @@ function updateTaskAndAssignNewTask(phase_name,task_id,update_body,physician_id,
                                 else{
                                   //Assign new task for coding
                                       assignNewCodingTask(phase_name,physician_id);
-                                          //checkForAdjudicationAssignment();
-                                        //SELECT * from tasks JOIN physicians on where tasks.task_status='AdjudicationAssignmentPending'
-                                        //Select * from phase_physician where phase_name='koramangala' and role like '%adjudicator%
-                                        //Select * from tasks where task_status != 'Complete' group by
+
                                 }
                             }
                           });
@@ -283,11 +279,59 @@ function assignNewCodingTask(phase_name,physician_id){
           {uri: "http://localhost:7000/assign_new_coding_task/phase/"+phase_name+"/coder_id/"+physician_id,method: "POST"},
            function(error, response, data) {
              console.log("RESPONSE RESPONSE  "+JSON.stringify(response))
+             checkForAdjudicationAssignment(phase_name);
           });
 
 }
 
-function checkForAdjudicationAssignment(){
+function checkForAdjudicationAssignment(phase_name){
+   console.log("Checking for assigning adjudication tasks in phase "+phase_name)
 
+   //checkForAdjudicationAssignment();
+    var fetch_adjudication_pending_tasks="SELECT * from tasks WHERE phase='"+phase_name+"' AND task_status='AdjudicationAssignmentPending'";
 
+    var fetch_adjudicators="SELECT * from phase_physician WHERE phase_name='"+phase_name+"' AND role LIKE '%adjudicator%' ";
+   //Select * from phase_physician where phase_name='koramangala' and role like '%adjudicator%
+   //Select * from tasks where task_status != 'Complete' group by
+   var adjudication_tasks=null;
+   var adjudicators=null;
+
+   console.log("Query is "+fetch_adjudication_pending_tasks);
+
+     db.query(fetch_adjudication_pending_tasks,function(err,result) {
+           if (err) {return res.status(500).send(err);}
+           else{ adjudication_tasks=result;
+              console.log("Adjudication tasks "+JSON.stringify(adjudication_tasks));
+
+                 if(adjudication_tasks.length != 0){
+                     console.log("Fetching Adjudicators")
+                     db.query(fetch_adjudicators,function(err,result) {
+                          if (err) {return res.status(500).send(err);}
+                          else{
+                                  adjudicators=result;
+                                  console.log("Adjudicators in phase "+phase_name+" "+adjudicators.length);
+                                  if(adjudicators.length > 0){
+                                      for(var i=0;i<adjudicators.length;i++){
+                                        var adjudicator=adjudicators[i];
+                                        console.log("Adjudicator "+JSON.stringify(adjudicator));
+                                         if(adjudication_tasks[0].phy_1_id != adjudicator.physician_id
+                                            && adjudication_tasks[0].phy_2_id != adjudicator.physician_id){
+
+                                              var assign_sql="UPDATE tasks SET adjudicator_id=?, task_status='AdjudicationAssigned' where id=?";
+                                              db.query(assign_sql,[adjudicator.physician_id,adjudication_tasks[0].id],function (er, results, fields){
+                                                  if (er) return res.status(500).send(er);
+                                                  else{
+                                                    //return res.status(200).json(results);
+                                                    console.log("Adjudication task is assigned to "+adjudicator.physician_id);
+                                                  }
+                                              });
+                                              //break;
+                                            }
+                                      }
+                                  }
+                             }
+                      });
+                 }
+              }
+       });
 }
