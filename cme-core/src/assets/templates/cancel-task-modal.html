@@ -1,0 +1,49 @@
+<!--<div ng-controller="CancelTaskController" ng-init="retrievePhysician()">-->
+<div>
+
+<div class="modal-header">
+    <h3>Cancel Task</h3>
+</div>
+
+  <div class="modal-body">
+
+    <form name="cancellationForm" class="form-horizontal" novalidate>
+
+     <div class="form-group">
+      <label style="text-align: left;" class ="control-label col-sm-offset-1 col-sm-4 ">Cancellation reason <span class="must">*</span></label>
+
+      <div class="col-sm-6">
+           <div  class="select-study-dropdown" style="width: 270px;">
+             <select  required ng-model="formData.cancellation_reason" id="mySelect">
+               <option value="" selected="selected" hidden>Select a reason</option>
+               <option value="Age does not match" selected="selected" >Age does not match</option>
+               <option value="Sex does not match" selected="selected" >Sex does not match</option>
+               <option value="Other" selected="selected" >Some other reason</option>
+             </select>
+          </div>
+    </div>
+    </div>
+
+    <div class="form-group" ng-show=" formData.cancellation_reason =='Other' ">
+     <label style="text-align: left;" class ="control-label col-sm-offset-1 col-sm-4">Specify other reason <span class="must">*</span></label>
+     <div class="col-sm-6" >
+         <!--<input required ng-model="formData.phase"  name="phase" type="text" class="form-control" placeholder="Phase Name">-->
+         <textarea placeholder="Type your cancellation reason here" style="resize:none" rows="3" cols="60" class="form-control"
+                   ng-model="formData.other_cancellation_reason">
+         </textarea>
+     </div>
+    </div>
+     <!--<pre>physicianForm= {{ formData | json }}</pre>-->
+    </form>
+  </div>
+
+    <div class="modal-footer">
+        <!--<button class="btn btn-success" ng-click="$close(savePhysicians())">Save</button>
+        <button class="btn btn-warning" ng-click="$dismiss('Modal was cancelled')" >Cancel</button>-->
+        <button class="btn btn-success" ng-click="$close(cancelTask())">Save</button>
+        <button class="btn btn-warning" ng-click="$dismiss('Modal was cancelled')">Cancel</button>
+    </div>
+
+
+
+</div>

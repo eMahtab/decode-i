@@ -1,11 +1,12 @@
 var appControllers=angular.module('app.controllers');
 
-appControllers.controller('TaskController',function(CONSTANT,$scope,Storage,$http,$stateParams,$state){
+appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,Storage,$http,$stateParams,$state){
 
     console.log("Inside task controller "+$stateParams.vaRecord);
     console.log("Complete state param "+JSON.stringify($stateParams));
     $scope.currentICD = null;
     $scope.record=null;
+    $scope.taskId=$stateParams.taskId;
     $scope.task_status=$stateParams.task.task_status;
     var phy_id=Storage.retrieve('id');
 
@@ -25,19 +26,6 @@ appControllers.controller('TaskController',function(CONSTANT,$scope,Storage,$htt
     }
 
     $scope.showComments=function(){
-
-      if($stateParams.task.task_status == 'CodingAssigned' || $stateParams.task.task_status == 'ReconciliationAssigned'){
-        /*if(Storage.retrieve('id') == $stateParams.task.phy_1_id && $stateParams.task['phy_2_coding_icd'] != null){
-          $scope.show_other_physicians_coding_comment=true;
-          console.log("Other P Coding Comment "+$stateParams.task['phy_2_coding_icd']+" - "+$stateParams.task['phy_2_comments']);
-          $scope.comments['other_physician_coding']=$stateParams.task['phy_2_coding_icd']+" - "+$stateParams.task['phy_2_comments'];
-        }
-        if(Storage.retrieve('id') == $stateParams.task.phy_2_id && $stateParams.task['phy_1_coding_icd'] != null){
-          $scope.show_other_physicians_coding_comment=true;
-          console.log("Other P Coding Comment "+$stateParams.task['phy_1_coding_icd']+" - "+$stateParams.task['phy_1_comments']);
-          $scope.comments['other_physician_coding']=$stateParams.task['phy_1_coding_icd']+" - "+$stateParams.task['phy_1_comments'];
-        }*/
-      }
 
       if($stateParams.task.task_status == 'ReconciliationAssigned' || $stateParams.task.task_status == 'AdjudicationAssigned'){
             $scope.show_your_coding_comment=true;
@@ -155,6 +143,28 @@ appControllers.controller('TaskController',function(CONSTANT,$scope,Storage,$htt
 
     $scope.clear=function(){
       console.log("Clear")
+      $scope.coding.comments="";
+    }
+
+    $scope.openCancelTaskModal=function(taskId){
+        console.log("Cancelling the task "+taskId)
+
+        var modalInstance = $uibModal.open({
+                                          templateUrl: 'assets/templates/cancel-task-modal.html',
+                                          backdrop: 'static',
+                                          controller: 'CancelTaskController',
+                                          resolve:{
+                                              taskId:function(){return taskId;}
+                                          }
+                                          });
+
+        modalInstance.result.then(function(result){
+                                    console.log("Phy "+JSON.stringify(result));
+                                    //$scope.formData.selectedPhysicians=result
+                                   },
+                                   function(reason){
+                                    console.log('Reason: ' + JSON.stringify(reason))
+                                   });
     }
 
 

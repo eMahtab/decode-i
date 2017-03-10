@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="provisioning_assets/css/app.css">
     <link rel="stylesheet" href="provisioning_assets/css/sidebar.css">
+    <link rel="stylesheet" href="provisioning_assets/css/dropdown.css">
     <link rel="stylesheet" href="vendor/AngularJS-Toaster/toaster.min.css" charset="utf-8">
     <!-- <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"> -->
   </head>
   <body ng-app="cmeProvisioning">
-    <toaster-container></toaster-container>
 
-    <div ng-include="'provisioning_assets/templates/sidebar.html'"></div>
+    <toaster-container></toaster-container>
 
     <div ui-view=""></div>
 
@@ -33,6 +33,6 @@
     <script src="provisioning_assets/js/controllers/ManagePhysicianController.js" ></script>
     <script src="provisioning_assets/js/controllers/AllPhaseController.js" ></script>
     <script src="provisioning_assets/js/app.js" ></script>
-    
+
   </body>
 </html>

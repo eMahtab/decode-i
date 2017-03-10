@@ -1,40 +1,42 @@
+<div ng-include="'provisioning_assets/templates/sidebar.html'"></div>
 <div class="container">
-<div class="col-md-offset-2 page-content">
+<div class="col-md-offset-2 col-md-12 page-content">
 
+      <br/><br/><br/>
 
-     <form name="physicianForm" ng-controller="PhysicianController" ng-submit="processForm()" class="col-md-12 form-horizontal" novalidate>
+     <form name="physicianForm" ng-controller="PhysicianController" ng-submit="processForm()" class="form-horizontal" novalidate>
 
         <div class="form-group">
-         <label style="text-align: left;" class ="control-label col-md-6 ">Physician name</label>
-         <div class="col-md-6">
-             <input ng-model="formData.name" type="text" class="form-control" placeholder="Physician Name">
+         <label style="text-align: left;" class ="control-label col-md-2 ">Physician name <span class="must">*</span></label>
+         <div class="col-md-3">
+             <input required ng-model="formData.name" type="text" class="form-control" placeholder="Physician Name">
          </div>
         </div>
 
         <br/>
 
         <div class="form-group">
-         <label style="text-align: left;" class ="control-label col-md-6 ">Email</label>
-         <div class="col-md-6">
-             <input ng-model="formData.email" type="text" class="form-control" placeholder="Email">
+         <label style="text-align: left;" class ="control-label col-md-2">Email <span class="must">*</span></label>
+         <div class="col-md-3" ng-class="{ 'has-error': physicianForm.email.$touched && physicianForm.email.$invalid }">
+             <input required ng-model="formData.email" name="email" type="email" class="form-control" placeholder="Email">
          </div>
         </div>
 
         <br/>
 
         <div class="form-group">
-         <label style="text-align: left;" class ="control-label col-md-6 ">Physician role</label>
-         <div class="col-sm-6">
+         <label style="text-align: left;" class ="control-label col-md-2">Physician role <span class="must">*</span></label>
+         <div class="col-sm-3">
            <label class="radio-inline">
-            <input ng-required="true" type="radio" ng-model="formData.role" name="sex" value="coder">
+            <input required type="radio" ng-model="formData.role" name="sex" value="coder">
              Only Coder
            </label><br/>
            <label class="radio-inline">
-            <input ng-required="true" type="radio" ng-model="formData.role" name="sex" value="adjudicator">
+            <input required  type="radio" ng-model="formData.role" name="sex" value="adjudicator">
              Only Adjudicator
            </label>  <br/>
            <label class="radio-inline">
-            <input ng-required="true" type="radio" ng-model="formData.role" name="sex" value="coder,adjudicator">
+            <input required  type="radio" ng-model="formData.role" name="sex" value="coder,adjudicator">
              Both Coder and Adjudicator
            </label>
          </div>
@@ -47,10 +49,10 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-12">
-              <button type="submit" class="btn btn-success">
-                <span>Save</span>
+              <button ng-disabled="physicianForm.$invalid" type="submit" class="btn btn-success">
+                <span>Create Physician</span>
               </button>
-                <pre>physicianForm= {{ formData | json }}</pre>
+              <!--  <pre>physicianForm= {{ physicianForm | json }}</pre>-->
             </div>
          </div>
 

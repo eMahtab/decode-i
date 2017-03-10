@@ -1,11 +1,14 @@
 <div class="container">
-     <h3 align="left">{{username}}</h3>
-     <h1 align="center">Tasks !</h1>
+  <br/>
+     <span style="font-weight:bold;font-size:15px" align="left">Welcome </span> <span>{{username}}</span>
+     <br/><br/><br/>
      <table class="table table-bordered">
      <thead>
        <tr>
          <th>Record ID</th>
-         <th>Type</th>
+         <th>Sex</th>
+         <th>Age</th>
+         <th>State</th>
        </tr>
      </thead>
 
@@ -17,7 +20,9 @@
                 {{task.record_id}}</a>
               </td>
 
-              <td>{{task.task_status}}</td>
+              <td>{{task.sex}}</td>
+              <td>{{task.age_value}} {{task.age_unit}}</td>
+              <td>{{ getState(task.task_status) }}</td>
           </tr>
       </tbody>
 

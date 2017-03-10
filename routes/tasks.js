@@ -5,7 +5,11 @@ exports.retrieveTasks=function(req,res){
    console.log("Fetching tasks for physician "+req.params.physician);
    var physician_one=false;
 
-   var sql = "SELECT * FROM tasks WHERE ("+
+   var sql = "SELECT tasks.id,phy_1_id,phy_2_id,record_id,sex,age_value,age_unit,task_status, "+
+             "phy_1_coding_icd,phy_1_comments,phy_2_coding_icd,phy_2_comments, "+
+             "phy_1_reconciliation_icd,phy_1_reconciliation_comments, "+
+             "phy_2_reconciliation_icd,phy_2_reconciliation_comments FROM tasks JOIN va_record ON tasks.record_id=va_record.deathId "+
+             " WHERE (task_status != 'Cancelled') AND ("+
              "(phy_1_id="+req.params.physician+" AND phy_1_coding_icd IS NULL) OR "+
              "(phy_2_id="+req.params.physician+" AND phy_2_coding_icd IS NULL))"+
              "OR ((phy_1_id="+req.params.physician+" AND phy_1_reconciliation_icd IS NULL AND task_status='ReconciliationAssigned')"+
@@ -18,7 +22,7 @@ exports.retrieveTasks=function(req,res){
    db.query(sql,function(err,result) {
     if (err) {return res.status(500).send(err);}
     else{
-      //console.log("All tasks "+JSON.stringify(result));
+      console.log("All tasks "+JSON.stringify(result));
       return res.status(200).json(result);
     }
 
@@ -68,7 +72,15 @@ exports.updateTask=function(req,res){
        console.log("Task to update is "+JSON.stringify(result));
        task_phase_name=result[0].phase;
        console.log("Updating in "+task_phase_name+" by "+physician_id+" with role "+physician_role)
-       if(result[0].task_status == 'CodingAssigned'){
+
+
+      if(req.body['task_status']=='Cancelled'){
+        updateTaskAndAssignNewTask(task_phase_name,req.params.taskId,req.body,physician_id,physician_role);
+        return res.status(200).json({"message":"Task is updated successfully"});
+      }
+
+
+       else if(result[0].task_status == 'CodingAssigned'){
 
        if(result[0].phy_1_coding_icd == null && result[0].phy_2_coding_icd == null){
                  updateTaskAndAssignNewTask(task_phase_name,req.params.taskId,req.body,physician_id,physician_role);
@@ -104,7 +116,7 @@ exports.updateTask=function(req,res){
                   }
        }
 
-      else if(result[0].phy_2_coding_icd != null){
+       else if(result[0].phy_2_coding_icd != null){
             console.log("Second physician have already coded");
             //Check whether coding icds are equal or equivalent, If not send for Reconciliation
 
@@ -229,54 +241,80 @@ function updateTaskAndAssignNewTask(phase_name,task_id,update_body,physician_id,
   var query_sql=update_tasks.substring(0,last_comma)+" "+update_tasks.substring(last_comma+1)
   console.log("Update SQL "+query_sql)
 
+  var phase_physicians=null;
+  var adjudicators=[];
+
   db.query(query_sql,[task_id],function (er, results, fields){
         if (er) {console.log("Error "+JSON.stringify(er));return res.status(500).send(er);}
         else{
            console.log("Task updated "+JSON.stringify(results));
-           //Assign New Task
+           //Assign New Tasks
 
-           //if(update_body.task_status == 'CodingAssigned' || update_body.task_status == 'AdjudicationAssignmentPending' || update_body.task_status == 'Complete' || update_body.task_status == 'ReconciliationAssigned'){
-            if(true){
-                console.log("Trying to assign new task");
+           if(physician_role.includes('coder')){
 
-                if(physician_role.toLowerCase().includes("coder")){
-                  //check If there are single coding assignment tasks
-                    var coding_pending_tasks_sql=" SELECT * FROM tasks where task_status='CodingAssigned' AND phy_2_id IS NULL AND phy_1_id !="+physician_id;
-                    db.query(coding_pending_tasks_sql,function(err,result) {
-                           if (err) {return res.status(500).send(err);}
-                           else{
-                             console.log(" *****  Single coding Tasks "+JSON.stringify(result));
-                             if(result.length != 0){
-                                console.log("Assigning single coding task to physician "+physician_id);
-                                var update_coding_task="UPDATE tasks SET phy_2_id="+physician_id+" WHERE id=?";
-                                db.query(update_coding_task,[result[0].id],function (er, new_task, fields){
-                                      if (er) {console.log("Error "+JSON.stringify(er));return res.status(500).send(er);}
-                                      else{
-                                        console.log("NEW TASK ASSIGNMENT "+JSON.stringify(new_task))
-                                        console.log("New task is assigned successfully");
-                                        checkForAdjudicationAssignment(phase_name)
-                                        // Call adjudication assignment tasks
-                                      }
-                                    });
-                                }
-                                else{
-                                  //Assign new task for coding
-                                      assignNewCodingTask(phase_name,physician_id);
+                  if(physician_role.includes('adjudicator')){
+                    var fetch_physicians_sql = "SELECT * FROM phase_physician where phase_name='"+phase_name+"'";
+                    db.query(fetch_physicians_sql,function(err,physicians) {
+                            if (err) return res.status(500).send(err);
+                          else{
+                               phase_physicians=physicians;
+                               phase_physicians.forEach(function(phy){
+                                  if(phy.role.includes("adjudicator")){
+                                    adjudicators.push(phy)
+                                   }
+                                 });
 
-                                }
-                            }
-                          });
+                               if(adjudicators.length <= 2){
+                                      ;
+                                 }
+                               else{
+                                  assignSingleCodedTask(phase_name,physician_id);
+                               }
+                           }
+                      });
                    }
 
                    else{
-                     //fetch all adjudicators
+                     assignSingleCodedTask(phase_name,physician_id);
                    }
-
-
-
            }
-        }
-    })
+           else{
+               checkForAdjudicationAssignment(phase_name)
+            }
+
+       }
+  });
+}
+
+
+
+
+function assignSingleCodedTask(phase_name,physician_id){
+
+  var coding_pending_tasks_sql=" SELECT * FROM tasks where phase='"+phase_name+"' AND task_status='CodingAssigned' AND phy_2_id IS NULL AND phy_1_id !="+physician_id;
+  db.query(coding_pending_tasks_sql,function(err,result) {
+         if (err) {return res.status(500).send(err);}
+         else{
+           console.log(" *****  Single coding Tasks "+JSON.stringify(result));
+           if(result.length != 0){
+              console.log("Assigning single coding task to physician "+physician_id);
+              var update_coding_task="UPDATE tasks SET phy_2_id="+physician_id+" WHERE id=?";
+              db.query(update_coding_task,[result[0].id],function (er, new_task, fields){
+                    if (er) {console.log("Error "+JSON.stringify(er));return res.status(500).send(er);}
+                    else{
+                      console.log("NEW TASK ASSIGNMENT "+JSON.stringify(new_task))
+                      console.log("New task is assigned successfully");
+                      checkForAdjudicationAssignment(phase_name)
+                      // Call adjudication assignment tasks
+                    }
+                  });
+              }
+              else{
+                //Assign new task for coding
+                    assignNewCodingTask(phase_name,physician_id);
+              }
+          }
+        });
 }
 
 
@@ -288,18 +326,13 @@ function assignNewCodingTask(phase_name,physician_id){
              console.log("RESPONSE RESPONSE  "+JSON.stringify(response))
              checkForAdjudicationAssignment(phase_name);
           });
-
 }
 
 function checkForAdjudicationAssignment(phase_name){
    console.log("Checking for assigning adjudication tasks in phase "+phase_name)
+   var fetch_adjudication_pending_tasks="SELECT * from tasks WHERE phase='"+phase_name+"' AND task_status='AdjudicationAssignmentPending'";
+   var fetch_adjudicators="SELECT * from phase_physician WHERE phase_name='"+phase_name+"' AND role LIKE '%adjudicator%' ";
 
-   //checkForAdjudicationAssignment();
-    var fetch_adjudication_pending_tasks="SELECT * from tasks WHERE phase='"+phase_name+"' AND task_status='AdjudicationAssignmentPending'";
-
-    var fetch_adjudicators="SELECT * from phase_physician WHERE phase_name='"+phase_name+"' AND role LIKE '%adjudicator%' ";
-   //Select * from phase_physician where phase_name='koramangala' and role like '%adjudicator%
-   //Select * from tasks where task_status != 'Complete' group by
    var adjudication_tasks=null;
    var adjudicators=null;
 

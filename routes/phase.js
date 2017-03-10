@@ -98,6 +98,7 @@ exports.initialAssignment=function(req,res){
      //console.log("REQ Phase "+JSON.stringify(req));
      var phase_physicians=null;
      var first_coders_map={};    var second_coders_map={};
+     var adjudicators=[];
 
      var tasks=null;
      var coders=[];
@@ -109,9 +110,20 @@ exports.initialAssignment=function(req,res){
      if (err) return res.status(500).send(err);
       else{
           phase_physicians=physicians;
+
+          phase_physicians.forEach(function(phy){
+            if(phy.role.includes("adjudicator")){
+                adjudicators.push(phy)
+              }
+            });
+
           phase_physicians.forEach(function(phy){
             if(phy.role.includes("coder")){
-                coders.push(phy)
+
+                 if( ! (phy.role.includes("adjudicator") && adjudicators.length <= 2) ){
+                        coders.push(phy);
+                 }
+
               }
             });
 

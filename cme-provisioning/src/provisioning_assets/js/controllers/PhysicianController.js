@@ -12,7 +12,11 @@ appControllers.controller('PhysicianController',function($scope,$http,CONSTANT,t
                  toaster.pop('success',"Physician created");
                },
          	   function(err){
-                 console.log("Error "+JSON.stringify(err));
+							 console.log("Error "+JSON.stringify(err));
+							 if(err.data.code == 'ER_DUP_ENTRY'){
+								  toaster.pop('error',"Error : A physician with this email already exists");
+							 }
+
          	   });
 	}
 

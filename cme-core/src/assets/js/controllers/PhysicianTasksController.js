@@ -19,4 +19,8 @@ appControllers.controller('PhysicianTasksController',function(CONSTANT,$state,$s
        $state.go('task',{'taskId':task.id,'vaRecord':task.record_id,'task':task})
      }
 
+     $scope.getState=function(state){
+       return state.split('Assigned')[0];
+     }
+
 });

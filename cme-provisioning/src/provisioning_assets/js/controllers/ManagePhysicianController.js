@@ -9,7 +9,7 @@ appControllers.controller('ManagePhysicianController',function($scope,$http,CONS
     $scope.physicians.selectedPhysicians=[];
 
     $scope.retrievePhysician =function(){
-        
+
           $http.get(CONSTANT.API_URL+'/physician')
         .then(function(res){
             $scope.retrievedPhysicians=res.data;
@@ -22,7 +22,7 @@ appControllers.controller('ManagePhysicianController',function($scope,$http,CONS
         var emails=$scope.physicians.selectedPhysicians.map(function(elem) {return elem.email;});
          if(emails.indexOf(physician.email) == -1){
             console.log("Added physician");
-            $scope.physicians.selectedPhysicians.push(physician);            
+            $scope.physicians.selectedPhysicians.push(physician);
          }
     }
 

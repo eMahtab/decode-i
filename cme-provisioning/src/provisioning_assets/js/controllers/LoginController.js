@@ -2,7 +2,7 @@ var appControllers=angular.module('app.controllers',[]);
 
 appControllers.controller('LoginController',function($state,$scope,UserService,AuthTokenFactory,Storage){
     $scope.user={};
-
+  
     $scope.login=function(email,password){
      $scope.loginError=null;
      var request_body={"email":email,"password":password};
