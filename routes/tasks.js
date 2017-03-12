@@ -3,7 +3,6 @@ var request=require('request');
 
 exports.retrieveTasks=function(req,res){
    console.log("Fetching tasks for physician "+req.params.physician);
-   var physician_one=false;
 
    var sql = "SELECT tasks.id,phy_1_id,phy_2_id,record_id,sex,age_value,age_unit,task_status, "+
              "phy_1_coding_icd,phy_1_comments,phy_2_coding_icd,phy_2_comments, "+
@@ -16,13 +15,29 @@ exports.retrieveTasks=function(req,res){
                     "OR (phy_2_id="+req.params.physician+" AND phy_2_reconciliation_icd IS NULL AND task_status='ReconciliationAssigned'))"+
              "OR (adjudicator_id="+req.params.physician+" AND task_status='AdjudicationAssigned')" ;
 
-              //"AND task_status != 'Complete'";
    console.log("Query is "+sql);
 
    db.query(sql,function(err,result) {
     if (err) {return res.status(500).send(err);}
     else{
       console.log("All tasks "+JSON.stringify(result));
+      return res.status(200).json(result);
+    }
+
+    });
+}
+
+
+exports.retrieveTask=function(req,res){
+   console.log("Fetching task "+req.params.taskId);
+   var sql = "SELECT * from tasks where id="+req.params.taskId;
+
+   console.log("Query is "+sql);
+
+   db.query(sql,function(err,result) {
+    if (err) {return res.status(500).send(err);}
+    else{
+      console.log("Task "+JSON.stringify(result));
       return res.status(200).json(result);
     }
 

@@ -1,22 +1,36 @@
 var appControllers=angular.module('app.controllers');
 
-appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,Storage,$http,$stateParams,$state){
+appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,Storage,$http,$stateParams,$state,toaster){
 
-    console.log("Inside task controller "+$stateParams.vaRecord);
-    console.log("Complete state param "+JSON.stringify($stateParams));
+    console.log("State Params "+JSON.stringify($stateParams));
     $scope.currentICD = null;
     $scope.record=null;
+    $scope.coding={};
     $scope.taskId=$stateParams.taskId;
-    $scope.task_status=$stateParams.task.task_status;
     var phy_id=Storage.retrieve('id');
 
     $scope.comments={'other_physician_coding':"none","other_physician_reconciliation":"none","your_coding":"none","your_reconciliation":"none"};
-
     $scope.show_other_physicians_coding_comment=false;
     $scope.show_other_physicians_reconciliation_comment=false;
-
     $scope.show_your_coding_comment=false;
     $scope.show_your_reconciliation_comment=false;
+
+    $http.get(CONSTANT.API_URL+"/vaRecord/"+$stateParams.vaRecord)
+    .then(function(res){
+        console.log("VaRecord "+JSON.stringify(res.data));
+        $scope.record=res.data[0];
+        $scope.fetchTask();
+        $scope.fetchICDs();
+    });
+
+    $scope.fetchTask=function(){
+      $http.get(CONSTANT.API_URL+"/task/"+$stateParams.taskId)
+      .then(function(res){
+          console.log("Fetched Task "+JSON.stringify(res.data));
+          $scope.task=res.data[0];
+          $scope.showComments();
+      });
+    }
 
     $scope.fetchICDs=function(){
       $http.get('assets/data/icd.json')
@@ -27,21 +41,21 @@ appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,St
 
     $scope.showComments=function(){
 
-      if($stateParams.task.task_status == 'ReconciliationAssigned' || $stateParams.task.task_status == 'AdjudicationAssigned'){
+      if($scope.task.task_status == 'ReconciliationAssigned' || $scope.task.task_status == 'AdjudicationAssigned'){
             $scope.show_your_coding_comment=true;
 
-            if(phy_id == $stateParams.task.phy_1_id){
+            if(phy_id == $scope.task.phy_1_id){
               console.log("First reconciliation block executed")
 
               $scope.show_other_physicians_coding_comment=true;
-              console.log("Other P Coding Comment "+$stateParams.task['phy_2_coding_icd']+" - "+$stateParams.task['phy_2_comments']);
-              $scope.comments['other_physician_coding']=$stateParams.task['phy_2_coding_icd']+" - "+$stateParams.task['phy_2_comments'];
-              $scope.comments['your_coding']=$stateParams.task['phy_1_coding_icd']+" - "+$stateParams.task['phy_1_comments'];
+              console.log("Other P Coding Comment "+$scope.task['phy_2_coding_icd']+" - "+$scope.task['phy_2_comments']);
+              $scope.comments['other_physician_coding']=$scope.task['phy_2_coding_icd']+" - "+$scope.task['phy_2_comments'];
+              $scope.comments['your_coding']=$scope.task['phy_1_coding_icd']+" - "+$scope.task['phy_1_comments'];
 
-              if($stateParams.task['phy_2_reconciliation_icd'] != null){
+              if($scope.task['phy_2_reconciliation_icd'] != null){
               $scope.show_other_physicians_reconciliation_comment=true;
-              console.log("Other P Reconciliation Comment "+$stateParams.task['phy_2_reconciliation_icd']+" - "+$stateParams.task['phy_2_reconciliation_comments']);
-              $scope.comments['other_physician_reconciliation']=$stateParams.task['phy_2_reconciliation_icd']+" - "+$stateParams.task['phy_2_reconciliation_comments'];
+              console.log("Other P Reconciliation Comment "+$scope.task['phy_2_reconciliation_icd']+" - "+$scope.task['phy_2_reconciliation_comments']);
+              $scope.comments['other_physician_reconciliation']=$scope.task['phy_2_reconciliation_icd']+" - "+$scope.task['phy_2_reconciliation_comments'];
                }
             }
 
@@ -49,31 +63,29 @@ appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,St
               console.log("Second reconciliation block executed")
 
               $scope.show_other_physicians_coding_comment=true;
-              console.log("Other P Coding Comment "+$stateParams.task['phy_1_coding_icd']+" - "+$stateParams.task['phy_1_comments']);
-              $scope.comments['other_physician_coding']=$stateParams.task['phy_1_coding_icd']+" - "+$stateParams.task['phy_1_comments'];
-              $scope.comments['your_coding']=$stateParams.task['phy_2_coding_icd']+" - "+$stateParams.task['phy_2_comments'];
+              console.log("Other P Coding Comment "+$scope.task['phy_1_coding_icd']+" - "+$scope.task['phy_1_comments']);
+              $scope.comments['other_physician_coding']=$scope.task['phy_1_coding_icd']+" - "+$scope.task['phy_1_comments'];
+              $scope.comments['your_coding']=$scope.task['phy_2_coding_icd']+" - "+$scope.task['phy_2_comments'];
 
-              if($stateParams.task['phy_1_reconciliation_icd'] != null){
+              if($scope.task['phy_1_reconciliation_icd'] != null){
               $scope.show_other_physicians_reconciliation_comment=true;
-              console.log("Other P Reconciliation Comment "+$stateParams.task['phy_1_reconciliation_icd']+" - "+$stateParams.task['phy_1_reconciliation_comments']);
-              $scope.comments['other_physician_reconciliation']=$stateParams.task['phy_1_reconciliation_icd']+" - "+$stateParams.task['phy_1_reconciliation_comments'];
+              console.log("Other P Reconciliation Comment "+$scope.task['phy_1_reconciliation_icd']+" - "+$scope.task['phy_1_reconciliation_comments']);
+              $scope.comments['other_physician_reconciliation']=$scope.task['phy_1_reconciliation_icd']+" - "+$scope.task['phy_1_reconciliation_comments'];
               }
 
             }
       }
-        if($stateParams.task.task_status == 'AdjudicationAssigned'){
+        if($scope.task.task_status == 'AdjudicationAssigned'){
              $scope.show_your_reconciliation_comment=true;
 
-              if(phy_id == $stateParams.task.phy_1_id){
-                $scope.comments['your_reconciliation']=$stateParams.task['phy_1_reconciliation_icd']+" - "+$stateParams.task['phy_1_reconciliation_comments'];
+              if(phy_id == $scope.task.phy_1_id){
+                $scope.comments['your_reconciliation']=$scope.task['phy_1_reconciliation_icd']+" - "+$scope.task['phy_1_reconciliation_comments'];
               }
               else{
-                $scope.comments['your_reconciliation']=$stateParams.task['phy_2_reconciliation_icd']+" - "+$stateParams.task['phy_2_reconciliation_comments'];
+                $scope.comments['your_reconciliation']=$scope.task['phy_2_reconciliation_icd']+" - "+$scope.task['phy_2_reconciliation_comments'];
               }
         }
     }
-
-    $scope.showComments();
 
     $scope.highlight=function(index){
        $scope.currentICD = index;
@@ -84,22 +96,13 @@ appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,St
       $scope.coding.icd=icd.icd+" - "+icd.description;
     }
 
-    $http.get(CONSTANT.API_URL+"/vaRecord/"+$stateParams.vaRecord)
-    .then(function(res){
-        //$scope.vaRecord.phases=res.data;
-        console.log("Record "+JSON.stringify(res.data));
-        $scope.record=res.data[0];
-        $scope.coding={};
-        $scope.fetchICDs();
-    });
-
     $scope.searchICD=function(){
       console.log("Input "+$scope.coding.icd);
     }
 
     $scope.save=function(){
       console.log("Saving")
-      console.log("ID "+Storage.retrieve('id'));
+      console.log("ID "+phy_id);
       var phy_icd=$scope.coding.icd+"";
       var icd_code=phy_icd.split("-")[0].trim();
       console.log("ICD "+icd_code);
@@ -107,8 +110,8 @@ appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,St
 
       var post_body={};
 
-      if($stateParams.task.task_status == 'CodingAssigned'){
-        if(Storage.retrieve('id') == $stateParams.task.phy_1_id){
+      if($scope.task.task_status == 'CodingAssigned'){
+        if(phy_id == $scope.task.phy_1_id){
                  post_body['phy_1_coding_icd']=icd_code;
                  post_body['phy_1_comments']=$scope.coding.comments;
         }else{
@@ -117,8 +120,8 @@ appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,St
         }
       }
 
-      else if($stateParams.task.task_status == 'ReconciliationAssigned'){
-        if(Storage.retrieve('id') == $stateParams.task.phy_1_id){
+      else if($scope.task.task_status == 'ReconciliationAssigned'){
+        if(phy_id == $scope.task.phy_1_id){
                  post_body['phy_1_reconciliation_icd']=icd_code;
                  post_body['phy_1_reconciliation_comments']=$scope.coding.comments;
         }else{
@@ -127,18 +130,21 @@ appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,St
         }
       }
 
-      else if($stateParams.task.task_status == 'AdjudicationAssigned'){
+      else if($scope.task.task_status == 'AdjudicationAssigned'){
                  post_body['adjudicator_icd']=icd_code;
                  post_body['adjudicator_comments']=$scope.coding.comments;
       }
 
-      $http.post(CONSTANT.API_URL+'/physician/'+Storage.retrieve('id')+'/role/'+Storage.retrieve('role')+'/task/'+$stateParams.task.id,JSON.stringify(post_body),
+      $http.post(CONSTANT.API_URL+'/physician/'+phy_id+'/role/'+Storage.retrieve('role')+'/task/'+$stateParams.taskId,JSON.stringify(post_body),
           {headers:{"Content-Type":"application/json"}})
-     .then(function(re){
-       console.log("Last Request"+JSON.stringify(re));
-       return re;
-     })
-
+     .then(function(response){
+              console.log("Task update response"+JSON.stringify(response));
+              toaster.pop('success','Task updated successfully');
+              setTimeout(function(){$state.go('tasks');},2000);
+          },
+          function(error){
+            toaster.pop('error',"Error occurred while submitting the task")
+          });
     }
 
     $scope.clear=function(){
@@ -159,14 +165,14 @@ appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,St
                                           });
 
         modalInstance.result.then(function(result){
-                                    console.log("Phy "+JSON.stringify(result));
-                                    //$scope.formData.selectedPhysicians=result
+
+                                    $state.go('tasks');
+                                    toaster.pop('success','Task cancelled successfully');
+                                    //setTimeout(function(){  },1000);
                                    },
                                    function(reason){
                                     console.log('Reason: ' + JSON.stringify(reason))
                                    });
     }
-
-
 
 });

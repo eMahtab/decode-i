@@ -1,4 +1,4 @@
-var app=angular.module('cmeCore',['ui.router','ui.bootstrap','app.constants','app.factory','app.service','app.controllers']);
+var app=angular.module('cmeCore',['ui.router','ui.bootstrap','app.constants','app.factory','app.service','app.controllers','toaster']);
 
 app.config(function($httpProvider){
   $httpProvider.interceptors.push('AuthInterceptor');
@@ -21,8 +21,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('task', {
             url: '/task/:taskId/vaRecord/:vaRecord',
             templateUrl: 'assets/templates/task.html',
-            controller:'TaskController',
-            params:{task:null}
+            controller:'TaskController'
         });
 
 });

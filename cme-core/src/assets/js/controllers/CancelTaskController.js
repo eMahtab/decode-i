@@ -23,13 +23,11 @@ appControllers.controller('CancelTaskController',['CONSTANT','$state','$scope','
      $scope.getState=function(state){
        return state.split('Assigned')[0];
      }*/
-     $scope.formData={};
+     $scope.formData={"cancellation_reason":'',"other_cancellation_reason":''};
 
-
-     console.log("Cancel task controller executed");
 
      $scope.cancelTask=function(){
-       console.log("Task is cancelled successfully "+taskId);
+       console.log("Cancel task controller executed "+taskId);
        var post_body={};
        post_body.cancellation_reason=$scope.formData.cancellation_reason;
        post_body.cancelled_by=Storage.retrieve('id');
@@ -41,7 +39,7 @@ appControllers.controller('CancelTaskController',['CONSTANT','$state','$scope','
        JSON.stringify(post_body),
            {headers:{"Content-Type":"application/json"}})
       .then(function(re){
-        console.log("Last Request"+JSON.stringify(re));
+        console.log("Task is cancelled successfully "+taskId);
         return re;
       })
 

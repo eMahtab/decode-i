@@ -15,8 +15,7 @@ appControllers.controller('PhysicianTasksController',function(CONSTANT,$state,$s
 
 
      $scope.openTask=function(task){
-       console.log("Task is "+JSON.stringify(task));
-       $state.go('task',{'taskId':task.id,'vaRecord':task.record_id,'task':task})
+       $state.go('task',{'taskId':task.id,'vaRecord':task.record_id})
      }
 
      $scope.getState=function(state){

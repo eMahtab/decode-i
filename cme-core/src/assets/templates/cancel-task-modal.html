@@ -15,10 +15,10 @@
       <div class="col-sm-6">
            <div  class="select-study-dropdown" style="width: 270px;">
              <select  required ng-model="formData.cancellation_reason" id="mySelect">
-               <option value="" selected="selected" hidden>Select a reason</option>
-               <option value="Age does not match" selected="selected" >Age does not match</option>
-               <option value="Sex does not match" selected="selected" >Sex does not match</option>
-               <option value="Other" selected="selected" >Some other reason</option>
+               <option value='' selected="selected" hidden>Select a reason</option>
+               <option value='Age does not match' selected="selected" >Age does not match</option>
+               <option value='Sex does not match' selected="selected" >Sex does not match</option>
+               <option value='Other' selected="selected" >Some other reason</option>
              </select>
           </div>
     </div>
@@ -33,14 +33,16 @@
          </textarea>
      </div>
     </div>
-     <!--<pre>physicianForm= {{ formData | json }}</pre>-->
+     <pre>physicianForm= {{ formData | json }}</pre>
     </form>
   </div>
 
     <div class="modal-footer">
         <!--<button class="btn btn-success" ng-click="$close(savePhysicians())">Save</button>
         <button class="btn btn-warning" ng-click="$dismiss('Modal was cancelled')" >Cancel</button>-->
-        <button class="btn btn-success" ng-click="$close(cancelTask())">Save</button>
+        <button class="btn btn-success"
+                ng-disabled=" formData.cancellation_reason == '' || (formData.cancellation_reason == 'Other' && formData.other_cancellation_reason =='')"
+                ng-click="$close(cancelTask())">Save</button>
         <button class="btn btn-warning" ng-click="$dismiss('Modal was cancelled')">Cancel</button>
     </div>
 

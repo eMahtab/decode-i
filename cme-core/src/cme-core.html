@@ -6,15 +6,19 @@
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <link rel="stylesheet" href="assets/css/dropdown.css">
+    <link rel="stylesheet" href="vendor/AngularJS-Toaster/toaster.min.css" charset="utf-8">
   <!--  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">-->
   </head>
   <body ng-app="cmeCore">
+
+    <toaster-container></toaster-container>
 
     <div ui-view=""></div>
 
     <script src="vendor/angular/angular.min.js" ></script>
     <script src="vendor/angular-ui-router/release/angular-ui-router.min.js" ></script>
     <script src="vendor/angular-animate/angular-animate.min.js" ></script>
+    <script src="vendor/AngularJS-Toaster/toaster.min.js" ></script>
     <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js" ></script>
 
     <script src="assets/js/constant.js" ></script>

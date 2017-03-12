@@ -68,6 +68,7 @@ app.get('/phase',phase.get);
 app.post('/phase/:phase_name/initialAssignment',phase.initialAssignment);
 
 app.get('/tasks/physician/:physician',tasks.retrieveTasks);
+app.get('/task/:taskId',tasks.retrieveTask);
 app.post('/physician/:physician_id/role/:physician_role/task/:taskId',tasks.updateTask);
 app.post('/assign_new_coding_task/phase/:phase_name/coder_id/:id',tasks.assignNewCoding);
 
