@@ -1,20 +1,21 @@
 <div class="container">
-  <br/><br/>
+     <br/><br/>
        <span style="font-weight:bold;font-size:15px" align="left">Dear Dr. {{username}} , </span>
        <span>you have {{tasks.length}} pending tasks, please complete your tasks.</span>
      <br/><br/>
+
      <div class="panel panel-primary">
-      <div class="panel-heading">Pending Tasks</div>
-      <div class="panel-body">
-        <table class="table table-condensed ">
-        <thead>
-          <tr>
-            <th>Record ID</th>
-            <th>Sex</th>
-            <th>Age</th>
-            <th>State</th>
-          </tr>
-        </thead>
+        <div class="panel-heading">Pending Tasks</div>
+        <div class="panel-body">
+           <table class="table table-condensed ">
+            <thead>
+              <tr>
+               <th>Record ID</th>
+               <th>Sex</th>
+               <th>Age</th>
+               <th>State</th>
+             </tr>
+           </thead>
 
          <tbody>
              <tr ng-repeat="task in tasks">
