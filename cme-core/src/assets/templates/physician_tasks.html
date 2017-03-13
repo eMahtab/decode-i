@@ -1,7 +1,8 @@
 <div class="container">
      <br/><br/>
        <span style="font-weight:bold;font-size:15px" align="left">Dear Dr. {{username}} , </span>
-       <span>you have {{tasks.length}} pending tasks, please complete your tasks.</span>
+       <span ng-show="tasks.length == 0">you have no pending tasks right now, please check back after some time.</span>
+       <span ng-show="tasks.length != 0">you have {{tasks.length}} pending tasks, please complete your tasks.</span>
      <br/><br/>
 
      <div class="panel panel-primary">

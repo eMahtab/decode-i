@@ -1,8 +1,12 @@
-<div style="text-align:right;margin-top:20px;margin-right:30px" class="cancel-task">
- <a  style="cursor:pointer" ng-click="openCancelTaskModal(taskId)">Cancel Task *</a>
+<div style="padding-left:20px;margin-top:20px;margin-right:30px" class="cancel-task">
+  <h4>Record - {{record.deathId}}, Sex - {{record.sex}}, Age - {{record.age_value}} {{record.age_unit}}</h4>
 </div>
 
-   <br/><br/>
+<div style="text-align:right;margin-right:30px" class="cancel-task">
+  <a  style="cursor:pointer" ng-click="openCancelTaskModal(taskId)">Cancel Task *</a>
+</div>
+
+   <br/>
     <div class="col-sm-5">
 
     <div class="panel panel-primary">
