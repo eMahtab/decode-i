@@ -1,7 +1,37 @@
 <div ng-include="'provisioning_assets/templates/sidebar.html'"></div>
 <div class="container">
-<div class="col-md-offset-2 col-md-12 page-content">
-     <h1 align="center">Great Admin!</h1>
-     <a ui-sref="study">Create Study</a>
+<div class="col-sm-offset-2 col-sm-10">
+     <!--- <h1 align="center">Great Admin!</h1>
+     <a ui-sref="study">Create Study</a>-->
+     <br/><br/><br/>
+     <div class="well well-sm">
+        <h4 align="center">Study</h4><hr/>
+        <h3 class="row">
+                  <a ui-sref="study"><div class="col-sm-1"><span class="glyphicon glyphicon-book"></span></div>
+                  <div class="col-sm-4">Create study</div></a>
+                  <div class="col-sm-6"><small>Create a new study for a specific region or cause</small></div>
+        </h3>
+     </div>
+
+     <br/><br/>
+     <div class="well well-sm">
+        <h4 align="center">Phase</h4><hr/>
+        <h3 class="row">
+                  <a ui-sref="phase"><div class="col-sm-1"><span class="glyphicon glyphicon-adjust"></span></div>
+                  <div class="col-sm-4">Create phase</div></a>
+                  <div class="col-sm-6"><small>Create a new phase in an existing study</small></div>
+        </h3>
+     </div>
+
+     <br/><br/>
+     <div class="well well-sm">
+        <h4 align="center">Physician</h4><hr/>
+        <h3 class="row">
+                  <a ui-sref="physician"><div class="col-sm-1"><span class="glyphicon glyphicon-user"></span></div>
+                  <div class="col-sm-4">Create physician</div></a>
+                  <div class="col-sm-6"><small>Create a new physician</small></div>
+        </h3>
+     </div>
+
 </div>
 </div>

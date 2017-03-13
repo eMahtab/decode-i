@@ -1,27 +1,34 @@
 <div ng-include="'provisioning_assets/templates/sidebar.html'"></div>
 <div class="container">
-<div class="col-md-offset-2 col-md-12 page-content">
+<div class="col-md-offset-3 col-sm-9">
 
   <br/>
+    <h3 align="center">Create Study</h3><hr/>
      <form name="studyForm" ng-controller="StudyController" ng-submit="processForm()" class="form-horizontal" novalidate>
 
-        <div class="col-md-6 form-group">
-         <label style="text-align: left;" class ="control-label col-md-4 ">Study name</label>
-         <div class="col-md-6">
-             <input ng-model="formData.name" type="text" class="form-control" placeholder="Study Name">
+        <div class="col-sm-12 form-group">
+         <label style="text-align: left;" class ="control-label col-sm-3 ">Study name<span class="must">*</span></label>
+         <div class="col-sm-4">
+             <input required ng-model="formData.name" type="text" class="form-control" placeholder="Study Name">
+         </div>
+         <div class="col-sm-3">
+           <button ng-disabled="studyForm.$invalid" type="submit" class="btn btn-success">
+             <span>Create</span>
+           </button>
+           <!--  <pre>studyForm= {{ formData | json }}</pre>  -->
          </div>
         </div>
 
          <br/>
 
-        <div class="form-group">
+      <!--  <div class="form-group">
             <div class="col-md-offset-2 col-md-6">
-              <button type="submit" class="btn btn-success">
+              <button ng-disabled="studyForm.$invalid" type="submit" class="btn btn-success">
                 <span>Save</span>
               </button>
-              <!--  <pre>studyForm= {{ formData | json }}</pre>  -->
+                <pre>studyForm= {{ formData | json }}</pre>
             </div>
-         </div>
+         </div>-->
 
 
      </form>

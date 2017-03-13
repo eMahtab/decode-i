@@ -1,13 +1,13 @@
 <div ng-include="'provisioning_assets/templates/sidebar.html'"></div>
 <div class="container">
-<div class="col-md-offset-2 col-md-12 page-content">
+<div class="col-sm-offset-3 col-sm-9">
 
-   <br/> <br/><br/>
-
+   <br/>
+    <h3 align="center">Create Phase</h3><hr/>
      <form name="createPhaseForm" class="form-horizontal" novalidate>
 
         <div class="form-group">
-         <label style="text-align: left;" class ="control-label col-md-2 ">Select study <span class="must">*</span></label>
+         <label style="text-align: left;" class ="control-label col-sm-3">Select study <span class="must">*</span></label>
            <div class="col-sm-6">
            <div class="select-study-dropdown" style="width: 425px;">
              <select  required ng-model="formData.study" id="mySelect"
@@ -21,14 +21,14 @@
         <br/>
 
         <div class="form-group">
-         <label style="text-align: left;" class ="control-label col-md-2">Phase name <span class="must">*</span></label>
+         <label style="text-align: left;" class ="control-label col-sm-3">Phase name <span class="must">*</span></label>
          <div class="col-sm-4" ng-class="{ 'has-error': createPhaseForm.phase.$touched && createPhaseForm.phase.$invalid }">
              <input required ng-model="formData.phase"  name="phase" type="text" class="form-control" placeholder="Phase Name">
          </div>
         </div>
 
         <div class="form-group">
-         <label style="text-align: left;" class ="control-label col-md-2">Add physicians <span class="must">*</span></label>
+         <label style="text-align: left;" class ="control-label col-sm-3">Add physicians <span class="must">*</span></label>
            <div class="col-sm-4">
             <button type="button" class="btn btn-warning" ng-click="openPhysicianModal()">Add Physicians</button>
           </div>
@@ -37,7 +37,7 @@
         <br/>
 
         <div class="form-group">
-         <label style="text-align: left;" class ="control-label col-md-2">Select VaRecords <span class="must">*</span> </label>
+         <label style="text-align: left;" class ="control-label col-sm-3">Select VaRecords <span class="must">*</span> </label>
            <div class="col-sm-8">
             <div class="select-study-dropdown" style="width: 212px;">
               <select  required ng-change="fetchVARecordPhases()"
@@ -59,7 +59,7 @@
          <br/>   <br/>   <br/>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-12">
+            <div class="col-md-offset-3 col-md-12">
               <button type="button" ng-disabled="createPhaseForm.$invalid" ng-click="processForm()" class="btn btn-success">
                 <span>Create Phase</span>
               </button>
