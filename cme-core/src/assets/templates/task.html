@@ -1,15 +1,30 @@
 <div style="padding-left:20px;margin-top:20px;margin-right:30px" class="cancel-task">
-  <h4>Record - {{record.deathId}}, Sex - {{record.sex}}, Age - {{record.age_value}} {{record.age_unit}}</h4>
+  <h4>Record - {{record.id}}</h4>
 </div>
 
 <div style="text-align:right;margin-right:30px" class="cancel-task">
   <a  style="cursor:pointer" ng-click="openCancelTaskModal(taskId)">Cancel Task *</a>
 </div>
 
-   <br/>
-    <div class="col-sm-5">
+<div class="row col-sm-12">
 
-    <div class="panel panel-primary">
+   <br/>
+    <div class="col-sm-6" ng-controller="ImageController">
+
+      <div style="position:relative">
+         <panzoomwidget panzoom-id="PanZoom" style="position:absolute;top:10px;left:10px;z-index:1"></panzoomwidget>
+         <panzoom id="PanZoom" config="panzoomConfig" model="panzoomModel" style="width:650px; height: 550px">
+             <img  ng-src="{{filepath}}" style="position:absolute" />
+            <!-- <svg style="position:absolute" width="800px" height="600px">
+                 <rect ng-repeat="rect in rects" ng-attr-x="{{rect.x}}" ng-attr-y="{{rect.y}}" ng-attr-width="{{rect.width}}" ng-attr-height="{{rect.height}}" rx="10" ry="10" style="fill:none;stroke-width:2;stroke:rgb(255,0,0)" />
+             </svg>-->
+         </panzoom>
+     </div>
+    <!-- <img class=" img-responsive" ng-src="{{filepath}}"></img>-->
+    </div>
+
+
+  <!--  <div class="panel panel-primary">record.image_filename
       <div class="panel-heading">
         Narrative
       </div>
@@ -17,7 +32,7 @@
        <div>
            <p>{{record.narrative}}</p>
        </div>
-         <!-- <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+          <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
              <li class="active"><a href="#narrative" data-toggle="tab">Narrative</a></li>
                <li><a href="#otherinfo" data-toggle="tab">Other information</a></li>
          </ul>
@@ -28,14 +43,14 @@
             <div class="tab-pane" id="otherinfo">
                  <p>Other information</p>
              </div>
-         </div> -->
+         </div>
      </div>
-   </div>
-
- </div>
+   </div>    -->
 
 
-       <div class="col-sm-4">
+
+
+       <div class="col-sm-3">
          <div class="panel panel-primary">
 
            <div class="panel-body">
@@ -136,3 +151,4 @@
            </div>
          </div>
        </div>
+</div>

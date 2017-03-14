@@ -24,6 +24,7 @@
     "angular-ui-router": "^0.4.2",
     "bootstrap": "^3.3.7",
     "AngularJS-Toaster": "angularjs-toaster#^2.1.0",
-    "angular-bootstrap": "^2.5.0"
+    "angular-bootstrap": "^2.5.0",
+    "angular-pan-zoom": "^1.0.18"
   }
 }

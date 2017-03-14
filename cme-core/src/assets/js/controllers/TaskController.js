@@ -19,6 +19,8 @@ appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,St
     .then(function(res){
         console.log("VaRecord "+JSON.stringify(res.data));
         $scope.record=res.data[0];
+        $scope.filepath="assets/cod_images/"+$scope.record.study+"/"+$scope.record.phase+"/"+$scope.record.image_filename;
+        console.log("Filepath is "+$scope.filepath)
         $scope.fetchTask();
         $scope.fetchICDs();
     });
@@ -139,7 +141,7 @@ appControllers.controller('TaskController',function($uibModal,CONSTANT,$scope,St
           {headers:{"Content-Type":"application/json"}})
      .then(function(response){
               console.log("Task update response"+JSON.stringify(response));
-              toaster.pop('success','Task updated successfully');
+              toaster.pop('success','Task submitted successfully');
               setTimeout(function(){$state.go('tasks');},2000);
           },
           function(error){

@@ -1,7 +1,7 @@
 <div class="container">
      <br/><br/>
        <span style="font-weight:bold;font-size:15px" align="left">Dear Dr. {{username}} , </span>
-       <span ng-show="tasks.length == 0">you have no pending tasks right now, please check back after some time.</span>
+       <span ng-show="tasks.length == 0">you dont' have any pending tasks right now, please check back after some time.</span>
        <span ng-show="tasks.length != 0">you have {{tasks.length}} pending tasks, please complete your tasks.</span>
      <br/><br/>
 
@@ -12,8 +12,6 @@
             <thead>
               <tr>
                <th>Record ID</th>
-               <th>Sex</th>
-               <th>Age</th>
                <th>State</th>
              </tr>
            </thead>
@@ -25,9 +23,6 @@
                    <a  ng-click="openTask(task)">
                    {{task.record_id}}</a>
                  </td>
-
-                 <td>{{task.sex}}</td>
-                 <td>{{task.age_value}} {{task.age_unit}}</td>
                  <td>{{ getState(task.task_status) }}</td>
              </tr>
          </tbody>

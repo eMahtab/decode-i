@@ -1,3 +1,15 @@
 .login-panel{
   padding-top: 100px;
 }
+
+
+
+
+
+.parentimage:hover {
+	-moz-transform: scale(2);
+	-webkit-transform: scale(4);
+	-o-transform: scale(2);
+	-ms-transform: scale(2);
+	transform: scale(4);
+}

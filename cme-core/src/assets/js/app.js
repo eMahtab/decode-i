@@ -1,4 +1,4 @@
-var app=angular.module('cmeCore',['ui.router','ui.bootstrap','app.constants','app.factory','app.service','app.controllers','toaster']);
+var app=angular.module('cmeCore',['ui.router','ui.bootstrap','app.constants','app.factory','app.service','app.controllers','toaster','panzoom', 'panzoomwidget']);
 
 app.config(function($httpProvider){
   $httpProvider.interceptors.push('AuthInterceptor');

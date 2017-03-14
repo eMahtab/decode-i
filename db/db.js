@@ -4,7 +4,7 @@ var db;
 function connectDatabase() {
     if (!db) {
         db = mysql.createConnection({ host: "localhost", user: "root", password: "new1prog$",
-          database:"decode"
+          database:"decode-i"
         });
 
         db.connect(function(err){

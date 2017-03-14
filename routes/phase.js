@@ -65,7 +65,7 @@ exports.initialize=function(req,res){
                    task[1]=body.phase_name;
                    task[2]=record[0];
                    task[3]=record[1];
-                   task[4]=death.deathId;
+                   task[4]=death.id;
                    task[5]="Initialized";
                    tasks.push(task);
               });
@@ -187,17 +187,20 @@ exports.initialAssignment=function(req,res){
                    }
                    assignment[2]=task.id;
                    //if(assignment[0]!=null && assignment[1]!=null){
-                   if(assignment[0]!=null){
-                     assignment_array.push(assignment);
-                     console.log("Coders Map "+JSON.stringify(first_coders_map)+JSON.stringify(second_coders_map));
-                     console.log("Assignment "+assignment);
-                     var update_tasks="UPDATE tasks SET phy_1_id=? , phy_2_id=?, task_status='CodingAssigned' where id=?";
-                     db.query(update_tasks,assignment,function (er, results, fields){
-                         if (er) {console.log("Error "+JSON.stringify(er));return res.status(500).send(er);}
-                         else{
-                            console.log("Assigning task "+JSON.stringify(results));
-                             }
-                     })
+                   if( (assignment[0]!=null) {
+
+                     if(assignment[0] != assignment[1]){ // This condition to make sure a single coder is never assigned both as phy_1 and phy_2
+                       assignment_array.push(assignment);
+                       console.log("Coders Map "+JSON.stringify(first_coders_map)+JSON.stringify(second_coders_map));
+                       console.log("Assignment "+assignment);
+                       var update_tasks="UPDATE tasks SET phy_1_id=? , phy_2_id=?, task_status='CodingAssigned' where id=?";
+                       db.query(update_tasks,assignment,function (er, results, fields){
+                           if (er) {console.log("Error "+JSON.stringify(er));return res.status(500).send(er);}
+                           else{
+                              console.log("Assigning task "+JSON.stringify(results));
+                               }
+                       })
+                     }
 
                    }
               });

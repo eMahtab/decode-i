@@ -7,7 +7,14 @@
     <link rel="stylesheet" href="assets/css/app.css">
     <link rel="stylesheet" href="assets/css/dropdown.css">
     <link rel="stylesheet" href="vendor/AngularJS-Toaster/toaster.min.css" charset="utf-8">
+    <link rel="stylesheet" href="vendor/angular-pan-zoom/release/panzoomwidget.css" charset="utf-8">
     <!-- <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"> -->
+    <style type="text/css">
+        .pan-zoom-frame {
+            /*  border: 1px solid #337ab7;  */
+             border: 1px solid black;
+        }
+    </style>
   </head>
   <body ng-app="cmeCore">
 
@@ -15,11 +22,17 @@
 
     <div ui-view=""></div>
 
+    <script src="vendor/jquery/dist/jquery.min.js" ></script>
     <script src="vendor/angular/angular.min.js" ></script>
     <script src="vendor/angular-ui-router/release/angular-ui-router.min.js" ></script>
     <script src="vendor/angular-animate/angular-animate.min.js" ></script>
     <script src="vendor/AngularJS-Toaster/toaster.min.js" ></script>
     <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js" ></script>
+    <script src="vendor/hamsterjs/hamster.js" ></script>
+    <script src="vendor/angular-mousewheel/mousewheel.js" ></script>
+    <script src="vendor/angular-pan-zoom/release/panzoom.js" ></script>
+
+
 
     <script src="assets/js/constant.js" ></script>
     <script src="assets/js/factory/factory.js" ></script>
@@ -28,6 +41,7 @@
     <script src="assets/js/controllers/PhysicianTasksController.js" ></script>
     <script src="assets/js/controllers/TaskController.js" ></script>
     <script src="assets/js/controllers/CancelTaskController.js" ></script>
+    <script src="assets/js/controllers/ImageController.js" ></script>
     <script src="assets/js/app.js" ></script>
   </body>
 </html>

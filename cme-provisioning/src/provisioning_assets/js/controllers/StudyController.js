@@ -1,6 +1,6 @@
 var appControllers=angular.module('app.controllers');
 
-appControllers.controller('StudyController',function($scope,$http,CONSTANT,toaster){
+appControllers.controller('StudyController',function($scope,$http,$state,CONSTANT,toaster){
 
 	$scope.formData={};
 
@@ -10,6 +10,7 @@ appControllers.controller('StudyController',function($scope,$http,CONSTANT,toast
         	{headers:{"Content-Type":"application/json"}})
          .then(function(res){
                  toaster.pop('success',"Study created");
+								 setTimeout(function(){$state.go('phase');},2000);
                },
          	   function(err){
                  console.log("Error "+err);

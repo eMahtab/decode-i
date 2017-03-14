@@ -4,10 +4,10 @@ var request=require('request');
 exports.retrieveTasks=function(req,res){
    console.log("Fetching tasks for physician "+req.params.physician);
 
-   var sql = "SELECT tasks.id,phy_1_id,phy_2_id,record_id,sex,age_value,age_unit,task_status, "+
+   var sql = "SELECT tasks.id,phy_1_id,phy_2_id,record_id,task_status, "+
              "phy_1_coding_icd,phy_1_comments,phy_2_coding_icd,phy_2_comments, "+
              "phy_1_reconciliation_icd,phy_1_reconciliation_comments, "+
-             "phy_2_reconciliation_icd,phy_2_reconciliation_comments FROM tasks JOIN va_record ON tasks.record_id=va_record.deathId "+
+             "phy_2_reconciliation_icd,phy_2_reconciliation_comments FROM tasks JOIN va_record ON tasks.record_id=va_record.id "+
              " WHERE (task_status != 'Cancelled') AND ("+
              "(phy_1_id="+req.params.physician+" AND phy_1_coding_icd IS NULL) OR "+
              "(phy_2_id="+req.params.physician+" AND phy_2_coding_icd IS NULL))"+
